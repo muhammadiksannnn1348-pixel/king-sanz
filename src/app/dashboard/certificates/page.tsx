@@ -2,11 +2,11 @@
 
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useEffect, useState, type PropsWithChildren } from 'react'
 import { supabase } from "../../../lib/supabase";
 import { Award, Upload, Trash2, ImageIcon, Plus } from 'lucide-react'
 
-const Card = ({ children, className = '' }) => (
+const Card = ({ children, className = '' }: PropsWithChildren<{ className?: string }>) => (
   <div className={`relative group ${className}`}>
     <div className="absolute -inset-0.5 bg-gradient-to-r from-[#6366f1] to-[#a855f7] rounded-2xl blur opacity-10 group-hover:opacity-25 transition duration-500" />
     <div className="relative bg-white/5 backdrop-blur-xl border border-white/12 rounded-2xl h-full">
@@ -14,6 +14,11 @@ const Card = ({ children, className = '' }) => (
     </div>
   </div>
 )
+
+type Certificate = {
+  id: string | number
+  Img: string
+}
 
 const SkeletonCard = () => (
   <div className="relative">
@@ -24,7 +29,7 @@ const SkeletonCard = () => (
   </div>
 )
 
-const CertCard = ({ cert, onDelete }) => {
+const CertCard = ({ cert, onDelete }: { cert: Certificate; onDelete: (id: string | number) => void }) => {
   const [imgLoaded, setImgLoaded] = useState(false)
 
   return (
@@ -57,9 +62,9 @@ const CertCard = ({ cert, onDelete }) => {
 }
 
 export default function Certificates() {
-  const [certs, setCerts] = useState([])
-  const [file, setFile] = useState(null)
-  const [preview, setPreview] = useState(null)
+  const [certs, setCerts] = useState<Certificate[]>([])
+  const [file, setFile] = useState<File | null>(null)
+  const [preview, setPreview] = useState<string | null>(null)
   const [uploading, setUploading] = useState(false)
   const [dragOver, setDragOver] = useState(false)
   const [loading, setLoading] = useState(true)
@@ -73,7 +78,7 @@ export default function Certificates() {
 
   useEffect(() => { fetchCerts() }, [])
 
-  const handleFile = (f) => {
+  const handleFile = (f: File | undefined) => {
     if (!f) return
     setFile(f)
     setPreview(URL.createObjectURL(f))
@@ -90,7 +95,7 @@ export default function Certificates() {
     fetchCerts()
   }
 
-  const deleteCert = async (id) => {
+  const deleteCert = async (id: string | number) => {
     if (!confirm('Delete this certificate?')) return
     await supabase.from('certificates').delete().eq('id', id)
     fetchCerts()
@@ -140,7 +145,7 @@ export default function Certificates() {
                 <p className="text-xs text-gray-600">PNG, JPG, WEBP supported</p>
               </div>
             )}
-            <input type="file" accept="image/*" onChange={e => handleFile(e.target.files[0])} className="hidden" />
+            <input type="file" accept="image/*" onChange={e => handleFile(e.target.files?.[0])} className="hidden" />
           </label>
 
           {file && (

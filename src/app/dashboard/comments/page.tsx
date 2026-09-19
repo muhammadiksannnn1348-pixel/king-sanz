@@ -2,7 +2,7 @@
 
 'use client'
 
-import { useEffect, useState, useMemo } from "react";
+import { useEffect, useState, useMemo, type PropsWithChildren, type ReactNode } from "react";
 import { supabase } from "../../../lib/supabase";
 import {
   MessageSquare,
@@ -18,7 +18,16 @@ import {
 
 const PAGE_SIZE = 10;
 
-const Card = ({ children, className = "" }) => (
+type Comment = {
+  id: string | number;
+  user_name?: string | null;
+  profile_image?: string | null;
+  content?: string | null;
+  created_at?: string | null;
+  is_pinned: boolean;
+};
+
+const Card = ({ children, className = "" }: PropsWithChildren<{ className?: string }>) => (
   <div className={`relative group ${className}`}>
     <div className="absolute -inset-0.5 bg-gradient-to-r from-[#6366f1] to-[#a855f7] rounded-2xl blur opacity-10 group-hover:opacity-20 transition duration-500 pointer-events-none" />
     <div className="relative bg-white/5 backdrop-blur-xl border border-white/12 rounded-2xl h-full">
@@ -28,7 +37,7 @@ const Card = ({ children, className = "" }) => (
 );
 
 export default function Comments() {
-  const [comments, setComments] = useState([]);
+  const [comments, setComments] = useState<Comment[]>([]);
   const [loading, setLoading] = useState(true);
   const [filter, setFilter] = useState("all");
   const [search, setSearch] = useState("");
@@ -54,7 +63,7 @@ export default function Comments() {
     setPage(1);
   }, [filter, search]);
 
-  const pin = async (id, value) => {
+  const pin = async (id: string | number, value: boolean) => {
     await supabase
       .from("portfolio_comments")
       .update({ is_pinned: value })
@@ -62,7 +71,7 @@ export default function Comments() {
     fetchComments();
   };
 
-  const remove = async (id) => {
+  const remove = async (id: string | number) => {
     if (!confirm("Delete this comment?")) return;
     await supabase.from("portfolio_comments").delete().eq("id", id);
     fetchComments();
@@ -70,7 +79,7 @@ export default function Comments() {
 
   const pinnedCount = comments.filter((c) => c.is_pinned).length;
 
-  const formatDate = (dateStr) => {
+  const formatDate = (dateStr?: string | null) => {
     if (!dateStr) return "";
     return new Date(dateStr).toLocaleDateString("en-US", {
       month: "short",
@@ -318,7 +327,7 @@ export default function Comments() {
               .filter(
                 (p) => p === 1 || p === totalPages || Math.abs(p - page) <= 1,
               )
-              .reduce((acc, p, i, arr) => {
+              .reduce<(number | string)[]>((acc, p, i, arr) => {
                 if (i > 0 && arr[i - 1] !== p - 1) acc.push("...");
                 acc.push(p);
                 return acc;
@@ -334,7 +343,7 @@ export default function Comments() {
                 ) : (
                   <button
                     key={p}
-                    onClick={() => setPage(p)}
+                    onClick={() => setPage(Number(p))}
                     className={`min-w-[32px] h-8 px-2 rounded-lg text-xs border transition-all duration-200 ${
                       page === p
                         ? "bg-indigo-500/20 border-indigo-500/40 text-indigo-300 font-medium"
@@ -361,7 +370,7 @@ export default function Comments() {
 }
 
 // Highlight matching text
-function highlightMatch(text, query) {
+function highlightMatch(text: string, query: string): ReactNode {
   if (!query.trim()) return text;
   const regex = new RegExp(
     `(${query.trim().replace(/[.*+?^${}()|[\]\\]/g, "\\$&")})`,
