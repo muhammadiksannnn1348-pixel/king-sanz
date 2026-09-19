@@ -1,0 +1,308 @@
+/* Mengimpor layer Tailwind CSS: base, komponen, dan utilitas */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Reset dan pengaturan global untuk semua elemen */
+* {
+	/* Menghapus margin default browser */
+	margin: 0;
+	/* Menghapus padding default browser */
+	padding: 0;
+	/* Mengatur box model sehingga padding dan border termasuk dalam ukuran elemen */
+	box-sizing: border-box;
+	/* Family font yang digunakan seluruh aplikasi */
+	font-family: "Poppins", system-ui, sans-serif;
+	/* Membuat scrolling halus saat berpindah posisi */
+	scroll-behavior: smooth;
+	/* Ketebalan scrollbar untuk browser yang mendukung */
+	scrollbar-width: thin;
+	/* Warna scrollbar untuk browser yang mendukung properti ini */
+	scrollbar-color: rgba(99, 102, 241, 0.3) rgba(12, 5, 53, 0.356);
+}
+
+/* Pengaturan untuk elemen root halaman */
+html,
+body {
+	/* Mencegah horizontal scroll yang tidak diinginkan */
+	overflow-x: hidden;
+	/* Warna latar belakang utama aplikasi (sangat gelap) */
+	background: #030014;
+	/* Memaksa efek scroll halus jika ada konflik */
+	scroll-behavior: smooth !important;
+	scroll-padding-top: 5rem;
+	overscroll-behavior-x: none;
+}
+
+body {
+	min-width: 320px;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+}
+
+.site-background {
+	background-color: #030014;
+	background-image:
+		radial-gradient(circle at 8% 12%, rgba(255, 255, 255, 0.7) 0 1px, transparent 1.5px),
+		radial-gradient(circle at 22% 38%, rgba(255, 255, 255, 0.45) 0 1px, transparent 1.5px),
+		radial-gradient(circle at 42% 18%, rgba(129, 140, 248, 0.55) 0 1px, transparent 1.5px),
+		radial-gradient(circle at 64% 12%, rgba(255, 255, 255, 0.5) 0 1px, transparent 1.5px),
+		radial-gradient(circle at 86% 28%, rgba(255, 255, 255, 0.6) 0 1px, transparent 1.5px),
+		radial-gradient(circle at 74% 62%, rgba(129, 140, 248, 0.4) 0 1px, transparent 1.5px),
+		radial-gradient(circle at 28% 76%, rgba(255, 255, 255, 0.5) 0 1px, transparent 1.5px),
+		radial-gradient(circle at 52% 88%, rgba(255, 255, 255, 0.4) 0 1px, transparent 1.5px);
+	background-size: 180px 170px, 240px 230px, 300px 260px, 210px 220px, 270px 250px, 330px 290px, 250px 280px, 310px 240px;
+}
+
+[id="home"],
+[id="about"],
+[id="portofolio"],
+[id="contact"] {
+	scroll-margin-top: 5rem;
+}
+
+button,
+a,
+input,
+textarea {
+	-webkit-tap-highlight-color: transparent;
+}
+
+:focus-visible {
+	outline: 2px solid rgba(129, 140, 248, 0.9);
+	outline-offset: 3px;
+}
+
+/* Animasi kustom 'blob' untuk elemen yang mengambang */
+@keyframes blob {
+	/* Awal animasi: posisi awal */
+	0%,
+	100% {
+		transform: translateY(0);
+	}
+	/* Tengah animasi: naik 20px */
+	50% {
+		transform: translateY(-20px);
+	}
+}
+
+/* Kelas yang menambahkan animasi blob dengan durasi 8s dan loop */
+.animate-blob {
+	animation: blob 8s infinite;
+}
+
+/* Kelas helper untuk menunda animasi 2 detik */
+.animation-delay-2000 {
+	animation-delay: 2s;
+}
+
+/* Kelas helper untuk menunda animasi 4 detik */
+.animation-delay-4000 {
+	animation-delay: 4s;
+}
+
+/* Gaya scrollbar kustom (WebKit browsers: Chrome, Edge, Safari) */
+::-webkit-scrollbar {
+	/* Lebar scrollbar vertikal */
+	width: 8px;
+	/* Tinggi scrollbar horizontal */
+	height: 8px;
+	/* Latar belakang transparan agar tidak mengganggu desain */
+	background-color: transparent;
+}
+
+/* Track (lajur) scrollbar */
+::-webkit-scrollbar-track {
+	/* Warna track gelap agak transparan */
+	background: rgba(3, 0, 20, 0.4);
+	/* Blur di belakang track untuk efek glassmorphism */
+	backdrop-filter: blur(8px);
+	-webkit-backdrop-filter: blur(8px);
+	/* Garis tipis di sekitar track */
+	border: 1px solid rgba(99, 102, 241, 0.1);
+}
+
+/* Thumb: bagian yang digeser user */
+::-webkit-scrollbar-thumb {
+	/* Warna thumb dasar */
+	background: rgba(99, 102, 241, 0.3);
+	/* Blur di thumb untuk konsistensi efek */
+	backdrop-filter: blur(4px);
+	-webkit-backdrop-filter: blur(4px);
+	/* Membulatkan sudut thumb */
+	border-radius: 20px;
+	/* Border tipis agar terlihat terangkat */
+	border: 1px solid rgba(255, 255, 255, 0.1);
+	/* Bayangan untuk memberi kedalaman */
+	box-shadow:
+		inset 0 0 20px rgba(168, 85, 247, 0.2),
+		0 0 10px rgba(99, 102, 241, 0.2);
+	/* Transisi halus saat hover/aktif */
+	transition: all 0.3s ease;
+}
+
+/* Saat pengguna menghover thumb */
+::-webkit-scrollbar-thumb:hover {
+	background: rgba(99, 102, 241, 0.5);
+	border: 1px solid rgba(168, 85, 247, 0.3);
+	box-shadow:
+		inset 0 0 30px rgba(168, 85, 247, 0.3),
+		0 0 15px rgba(99, 102, 241, 0.3);
+}
+
+/* Saat thumb diklik/aktif */
+::-webkit-scrollbar-thumb:active {
+	background: rgba(99, 102, 241, 0.6);
+	border: 1px solid rgba(168, 85, 247, 0.4);
+	box-shadow:
+		inset 0 0 40px rgba(168, 85, 247, 0.4),
+		0 0 20px rgba(99, 102, 241, 0.4);
+}
+
+/* Sudut scrollbar (korelasi antara track vertikal & horizontal) */
+::-webkit-scrollbar-corner {
+	background: transparent;
+}
+
+/* Optimisasi untuk elemen yang memiliki atribut data-aos (AOS animation) */
+[data-aos] {
+	/* Memberi tahu browser akan sering berubah sehingga performa ditingkatkan */
+	will-change: transform, opacity !important;
+}
+
+/* Animasi garis 'shine' untuk efek kilau */
+@keyframes shine {
+	/* Mulai di sebelah kiri elemen */
+	from {
+		left: -100%;
+	}
+	/* Bergerak melewati elemen sampai jauh di kanan */
+	to {
+		left: 200%;
+	}
+}
+
+/* Kelas helper untuk menambahkan animasi shine */
+.animate-shine {
+	animation: shine 1.5s ease-in-out infinite;
+}
+
+@keyframes profile-float {
+	0%, 100% { transform: translateY(0); }
+	50% { transform: translateY(-20px); }
+}
+
+@keyframes profile-spin-slower {
+	to { transform: rotate(360deg); }
+}
+
+@keyframes profile-spin-slow {
+	to { transform: rotate(360deg); }
+}
+
+@keyframes profile-spin-reverse {
+	to { transform: rotate(-360deg); }
+}
+
+@keyframes profile-scan {
+	0% { transform: translateY(-100%); }
+	100% { transform: translateY(400%); }
+}
+
+@keyframes profile-gradient-rotate {
+	0% { filter: hue-rotate(0deg); }
+	100% { filter: hue-rotate(360deg); }
+}
+
+.animate-float { animation: profile-float 4s ease-in-out infinite; }
+.animate-spin-slower { animation: profile-spin-slower 8s linear infinite; }
+.animate-spin-slow { animation: profile-spin-slow 20s linear infinite; }
+.animate-spin-reverse { animation: profile-spin-reverse 25s linear infinite; }
+.animate-scan { animation: profile-scan 3s linear infinite; }
+.animate-gradient-rotate { animation: profile-gradient-rotate 8s linear infinite; }
+
+/* Contoh media query untuk preferensi warna gelap (dikomentari)
+	 Jika ingin mengaktifkan, hapus komentar di bawah ini */
+/*
+@media (prefers-color-scheme: dark) {
+	::-webkit-scrollbar-track {
+		background: rgba(3, 0, 20, 0.6);
+	}
+}
+*/
+
+
+/*
+	Contoh gaya eksperimental untuk 'main' dan blob; sengaja dikomentari.
+	Jika ingin menggunakan efek ini, aktifkan dan sesuaikan ukuran/posisi.
+
+	.container {
+		width: 100%;
+		height: 100%;
+	}
+
+	.main > div {
+		position: absolute;
+		will-change: transform;
+		border-radius: 50%;
+		background: lightcoral;
+		box-shadow: 10px 10px 5px 0px rgba(0, 0, 0, 0.75);
+		opacity: 0.6;
+	}
+
+	.main > div:nth-child(1) {
+		width: 60px;
+		height: 60px;
+	}
+
+	.main > div:nth-child(2) {
+		width: 125px;
+		height: 125px;
+	}
+
+	.main > div:nth-child(3) {
+		width: 75px;
+		height: 75px;
+	}
+
+	.main > div::after {
+		content: '';
+		position: absolute;
+		top: 20px;
+		left: 20px;
+		width: 20px;
+		height: 20px;
+		border-radius: 50%;
+		background: rgba(255, 0, 0, 0.8);
+	}
+
+	.main > div:nth-child(2)::after {
+		top: 35px;
+		left: 35px;
+		width: 35px;
+		height: 35px;
+	}
+
+	.main > div:nth-child(3)::after {
+		top: 25px;
+		left: 25px;
+		width: 25px;
+		height: 25px;
+	}
+
+	.main {
+		position: absolute;
+		width: 100%;
+		height: 100%;
+		filter: url('#blob');
+		overflow: hidden;
+		background: transparent;
+		-webkit-touch-callout: none;
+		-webkit-user-select: none;
+		-khtml-user-select: none;
+		-moz-user-select: none;
+		-ms-user-select: none;
+		user-select: none;
+		cursor: default;
+	}
+*/
