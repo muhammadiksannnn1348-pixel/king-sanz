@@ -46,29 +46,6 @@ Halaman ini menampilkan:
 - gambar proyek
 - halaman 404 jika data tidak ditemukan
 
-### Dashboard Admin
-
-Aplikasi memiliki halaman login admin di route:
-
-```text
-/login
-```
-
-Setelah login berhasil, admin dapat masuk ke dashboard berikut:
-
-- `/dashboard/projects`
-- `/dashboard/certificates`
-- `/dashboard/comments`
-
-Fitur dashboard mencakup:
-
-- menambah proyek
-- mengedit proyek
-- menghapus proyek
-- mengelola sertifikat
-- melihat data komentar pengunjung
-- proteksi akses melalui `ProtectedRoute`
-
 ### Integrasi Supabase
 
 Semua data konten dikelola melalui Supabase, termasuk:
@@ -176,10 +153,6 @@ src/
 | --- | --- |
 | `/` | Halaman utama portfolio |
 | `/project/[slug]` | Detail proyek berdasarkan slug |
-| `/login` | Login admin |
-| `/dashboard/projects` | Kelola proyek |
-| `/dashboard/certificates` | Kelola sertifikat |
-| `/dashboard/comments` | Kelola komentar |
 | `*` | Halaman 404 |
 
 ## Persyaratan Sistem
@@ -189,44 +162,6 @@ Sebelum menjalankan proyek, pastikan perangkat Anda sudah memiliki:
 - Node.js 18+
 - npm atau package manager lain yang kompatibel
 - akun Supabase aktif
-
-## Instalasi
-
-### 1. Clone Repository
-
-```bash
-git clone <url-repository>
-cd Poertofolio-Sanz
-```
-
-### 2. Install Dependency
-
-```bash
-npm install
-```
-
-### 3. Siapkan Environment Variables
-
-Buat file `.env.local` di root project dan isi konfigurasi berikut:
-
-```env
-NEXT_PUBLIC_SUPABASE_URL=https://your-project.supabase.co
-NEXT_PUBLIC_SUPABASE_ANON_KEY=your-anon-key
-```
-
-> Pastikan nilai tersebut sesuai dengan project Supabase Anda. Jangan membagikan key ke publik dan jangan menaruh secret key sensitif di repository.
-
-### 4. Jalankan Development Server
-
-```bash
-npm run dev
-```
-
-Setelah itu, buka browser ke:
-
-```text
-http://localhost:3000
-```
 
 ## Perintah NPM
 
