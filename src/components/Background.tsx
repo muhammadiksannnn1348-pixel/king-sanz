@@ -1,3 +1,5 @@
+// Animated background effect for the website.
+
 'use client'
 
 import React, { useEffect, useLayoutEffect, useRef } from "react"

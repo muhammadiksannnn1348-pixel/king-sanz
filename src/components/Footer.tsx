@@ -1,3 +1,5 @@
+// Footer with quick links and social media.
+
 const Footer = () => {
   const currentYear = new Date().getFullYear();
 

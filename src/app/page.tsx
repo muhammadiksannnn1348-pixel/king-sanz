@@ -1,3 +1,5 @@
+// Landing page entry: renders the portfolio homepage.
+
 'use client'
 
 import { useEffect, useLayoutEffect, useState } from 'react'

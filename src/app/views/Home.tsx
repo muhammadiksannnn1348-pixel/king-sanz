@@ -1,3 +1,5 @@
+// Home section: hero content and headline.
+
 'use client'
 
 // Import dasar React dan beberapa hook yang digunakan

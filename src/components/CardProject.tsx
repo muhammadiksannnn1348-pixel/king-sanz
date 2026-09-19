@@ -1,3 +1,5 @@
+// Project card component for the portfolio grid.
+
 import React from "react";
 import Link from "next/link";
 import { ExternalLink, ArrowRight } from "lucide-react";

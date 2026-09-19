@@ -1,3 +1,5 @@
+// Certificate management page in the dashboard.
+
 'use client'
 
 import { useEffect, useState } from 'react'

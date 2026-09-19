@@ -1,3 +1,5 @@
+// Removes old service worker cache on refresh.
+
 'use client'
 
 import { useEffect } from 'react'

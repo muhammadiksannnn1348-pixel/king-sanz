@@ -1,3 +1,5 @@
+// Welcome splash screen shown on first load.
+
 'use client'
 
 import React, { useState, useEffect, useRef } from "react";
@@ -8,8 +10,12 @@ import "aos/dist/aos.css";
 
 import Lightning from "../../components/Lightning";
 
+interface TypewriterEffectProps {
+  text: string;
+}
+
 // Typewriter Effect
-const TypewriterEffect = ({ text }) => {
+const TypewriterEffect = ({ text }: TypewriterEffectProps) => {
   const [displayText, setDisplayText] = useState("");
 
   useEffect(() => {
@@ -33,7 +39,11 @@ const TypewriterEffect = ({ text }) => {
   );
 };
 
-const IconButton = ({ Icon }) => (
+interface IconButtonProps {
+  Icon: React.ComponentType<{ className?: string }>;
+}
+
+const IconButton = ({ Icon }: IconButtonProps) => (
   <div className="relative group hover:scale-110 transition-transform duration-300">
     <div className="absolute -inset-2 bg-gradient-to-r from-indigo-600 to-purple-600 rounded-full blur opacity-30 group-hover:opacity-75 transition duration-300" />
     <div className="relative p-2 sm:p-3 bg-black/50 backdrop-blur-sm rounded-full border border-white/10">
@@ -44,14 +54,36 @@ const IconButton = ({ Icon }) => (
 
 // Background Bintang + Bintang Jatuh
 const StarryBackground = () => {
-  const canvasRef = useRef(null);
+  const canvasRef = useRef<HTMLCanvasElement | null>(null);
 
   useEffect(() => {
     const canvas = canvasRef.current;
+    if (!canvas) return;
+
     const ctx = canvas.getContext("2d");
-    let animationId;
-    let stars = [];
-    let shootingStars = [];
+    if (!ctx) return;
+
+    let animationId = 0;
+    type Star = {
+      x: number;
+      y: number;
+      radius: number;
+      opacity: number;
+      twinkleSpeed: number;
+      twinkleDirection: number;
+    };
+
+    type ShootingStar = {
+      x: number;
+      y: number;
+      length: number;
+      speed: number;
+      opacity: number;
+      angle: number;
+    };
+
+    let stars: Star[] = [];
+    let shootingStars: ShootingStar[] = [];
 
     const resize = () => {
       canvas.width = window.innerWidth;
@@ -60,7 +92,7 @@ const StarryBackground = () => {
     resize();
     window.addEventListener("resize", resize);
 
-    const createStars = (count) => {
+    const createStars = (count: number) => {
       stars = [];
       for (let i = 0; i < count; i++) {
         stars.push({
@@ -161,7 +193,11 @@ const StarryBackground = () => {
   );
 };
 
-const WelcomeScreen = ({ onLoadingComplete }) => {
+interface WelcomeScreenProps {
+  onLoadingComplete?: () => void;
+}
+
+const WelcomeScreen = ({ onLoadingComplete }: WelcomeScreenProps) => {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {

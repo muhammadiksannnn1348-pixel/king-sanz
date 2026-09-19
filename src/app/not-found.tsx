@@ -1,3 +1,5 @@
+// Custom 404 page for missing routes.
+
 'use client'
 
 import React from 'react';

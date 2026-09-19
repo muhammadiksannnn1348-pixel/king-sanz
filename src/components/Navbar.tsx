@@ -1,8 +1,15 @@
+// Top navigation bar for the landing page.
+
 'use client'
 
 import React, { useState, useEffect } from "react";
 import { Menu, X } from "lucide-react";
 import { Zap } from "lucide-react"
+
+type NavItem = {
+    href: string;
+    label: string;
+};
 
 /*
   Navbar.jsx
@@ -22,7 +29,7 @@ const Navbar = () => {
     const [activeSection, setActiveSection] = useState("home");
 
     // daftar link navigasi; gunakan href anchor agar berlaku single-page
-    const navItems = [
+    const navItems: NavItem[] = [
         { href: "#home", label: "Home" },
         { href: "#about", label: "About" },
         { href: "#portofolio", label: "Portofolio" },
@@ -36,7 +43,7 @@ const Navbar = () => {
 
             // Cari posisi tiap section (offset top dan tinggi)
             const sections = navItems
-                .map((item) => {
+                .map((item): { id: string; offset: number; height: number } | null => {
                     const section = document.querySelector(item.href);
                     if (section) {
                         const element = section as HTMLElement;
@@ -48,7 +55,7 @@ const Navbar = () => {
                     }
                     return null;
                 })
-                .filter(Boolean);
+                .filter((section): section is { id: string; offset: number; height: number } => Boolean(section));
 
             const currentPosition = window.scrollY;
             const active = sections.find(
@@ -77,11 +84,11 @@ const Navbar = () => {
     }, [isOpen]);
 
     // Fungsi helper untuk scroll ke section dan menutup menu mobile
-    const scrollToSection = (e, href) => {
+    const scrollToSection = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
         e.preventDefault();
         const section = document.querySelector(href);
         if (section) {
-            const top = section.offsetTop - 100; // offset agar tidak tertutup header
+            const top = section.getBoundingClientRect().top + window.scrollY - 100;
             window.history.pushState(null, "", href.toLowerCase());
             window.scrollTo({
                 top: top,

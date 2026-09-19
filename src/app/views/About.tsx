@@ -1,3 +1,5 @@
+// About section: profile intro, stats, and CTA.
+
 'use client'
 
 import React, { useEffect, useState, memo, useMemo, useRef } from "react"
@@ -7,10 +9,10 @@ import 'aos/dist/aos.css'
 
 // ==================== CUSTOM HOOKS ====================
 const useTilt = (intensity = 15) => {
-  const ref = useRef(null)
-  const [style, setStyle] = useState({})
+  const ref = useRef<HTMLDivElement | null>(null)
+  const [style, setStyle] = useState<React.CSSProperties>({})
 
-  const handleMouseMove = (e) => {
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
     if (!ref.current) return
     const rect = ref.current.getBoundingClientRect()
     const x = (e.clientX - rect.left) / rect.width - 0.5
@@ -268,9 +270,9 @@ const AboutPage = () => {
 
     initAOS();
     
-    let resizeTimer;
+    let resizeTimer: ReturnType<typeof setTimeout> | undefined;
     const handleResize = () => {
-      clearTimeout(resizeTimer);
+      if (resizeTimer) clearTimeout(resizeTimer);
       resizeTimer = setTimeout(initAOS, 250);
     };
 

@@ -1,3 +1,5 @@
+// Full project detail view with metadata.
+
 "use client";
 
 import React, { useEffect, useState, useRef } from "react";
@@ -19,8 +21,18 @@ import Swal from "sweetalert2";
 import { toSlug } from "../lib/slug";
 import NotFoundPage from "../app/views/404";
 
+type Project = {
+  Title: string;
+  Description?: string;
+  Features?: string[];
+  TechStack?: string[];
+  Github?: string;
+  Link?: string;
+  Img?: string;
+};
+
 // Helper format URL
-const formatUrl = (url) => {
+const formatUrl = (url?: string): string => {
   if (!url) return "#";
   if (!/^https?:\/\//i.test(url)) {
     return `https://${url}`;
@@ -29,7 +41,7 @@ const formatUrl = (url) => {
 };
 
 // Icon mapping
-const TECH_ICONS = {
+const TECH_ICONS: Record<string, typeof Globe> = {
   React: Globe,
   Tailwind: Layout,
   Express: Cpu,
@@ -40,7 +52,7 @@ const TECH_ICONS = {
   default: Package,
 };
 
-const TechBadge = ({ tech }) => {
+const TechBadge = ({ tech }: { tech: string }) => {
   const Icon = TECH_ICONS[tech] || TECH_ICONS["default"];
   return (
     <div className="group relative overflow-hidden px-3 py-2 md:px-4 md:py-2.5 bg-gradient-to-r from-blue-600/10 to-purple-600/10 rounded-xl border border-blue-500/10 hover:border-blue-500/30 transition-all duration-300 cursor-default">
@@ -55,7 +67,7 @@ const TechBadge = ({ tech }) => {
   );
 };
 
-const FeatureItem = ({ feature }) => {
+const FeatureItem = ({ feature }: { feature: string }) => {
   return (
     <li className="group flex items-start space-x-3 p-2.5 md:p-3.5 rounded-xl hover:bg-white/5 transition-all duration-300 border border-transparent hover:border-white/10">
       <div className="relative mt-2">
@@ -69,7 +81,7 @@ const FeatureItem = ({ feature }) => {
   );
 };
 
-const ProjectStats = ({ project }) => {
+const ProjectStats = ({ project }: { project: Project }) => {
   const techStackCount = project?.TechStack?.length || 0;
   const featuresCount = project?.Features?.length || 0;
 
@@ -100,7 +112,7 @@ const ProjectStats = ({ project }) => {
 };
 
 // Handle klik Live Demo
-const handleLiveDemoClick = (link) => {
+const handleLiveDemoClick = (link?: string) => {
   if (!link || link.trim() === "") {
     Swal.fire({
       icon: "info",
@@ -117,7 +129,7 @@ const handleLiveDemoClick = (link) => {
 };
 
 // Handle klik Github
-const handleGithubClick = (githubLink) => {
+const handleGithubClick = (githubLink?: string) => {
   if (!githubLink || githubLink === "Private" || githubLink.trim() === "") {
     Swal.fire({
       icon: "info",
@@ -135,14 +147,36 @@ const handleGithubClick = (githubLink) => {
 
 // Background Bintang + Bintang Jatuh
 const StarryBackground = () => {
-  const canvasRef = useRef(null);
+  const canvasRef = useRef<HTMLCanvasElement | null>(null);
 
   useEffect(() => {
     const canvas = canvasRef.current;
+    if (!canvas) return;
+
     const ctx = canvas.getContext("2d");
-    let animationId;
-    let stars = [];
-    let shootingStars = [];
+    if (!ctx) return;
+
+    let animationId = 0;
+    type Star = {
+      x: number;
+      y: number;
+      radius: number;
+      opacity: number;
+      twinkleSpeed: number;
+      twinkleDirection: number;
+    };
+
+    type ShootingStar = {
+      x: number;
+      y: number;
+      length: number;
+      speed: number;
+      opacity: number;
+      angle: number;
+    };
+
+    let stars: Star[] = [];
+    let shootingStars: ShootingStar[] = [];
 
     const resize = () => {
       canvas.width = window.innerWidth;
@@ -151,7 +185,7 @@ const StarryBackground = () => {
     resize();
     window.addEventListener("resize", resize);
 
-    const createStars = (count) => {
+    const createStars = (count: number) => {
       stars = [];
       for (let i = 0; i < count; i++) {
         stars.push({
@@ -250,18 +284,18 @@ const StarryBackground = () => {
   );
 };
 
-const ProjectDetails = ({ slug }) => {
-  const [project, setProject] = useState(null);
+const ProjectDetails = ({ slug }: { slug: string }) => {
+  const [project, setProject] = useState<Project | null>(null);
   const [hasResolvedProject, setHasResolvedProject] = useState(false);
   const [isImageLoaded, setIsImageLoaded] = useState(false);
 
   useEffect(() => {
     window.scrollTo(0, 0);
-    const storedProjects = JSON.parse(localStorage.getItem("projects")) || [];
+    const storedProjects = JSON.parse(localStorage.getItem("projects") ?? "[]") as Project[];
     const selectedProject = storedProjects.find((p) => toSlug(p.Title) === slug);
 
     if (selectedProject) {
-      const enhancedProject = {
+      const enhancedProject: Project = {
         ...selectedProject,
         Features: selectedProject.Features || [],
         TechStack: selectedProject.TechStack || [],

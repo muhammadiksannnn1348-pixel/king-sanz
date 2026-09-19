@@ -1,3 +1,5 @@
+// Project detail route for a single portfolio item.
+
 import ProjectDetail from '../../../components/ProjectDetail'
 import Footer from '../../../components/Footer'
 

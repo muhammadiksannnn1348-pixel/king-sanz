@@ -1,3 +1,5 @@
+// Helper for creating readable project slugs.
+
 export const toSlug = (title) =>
   title
     .toLowerCase()

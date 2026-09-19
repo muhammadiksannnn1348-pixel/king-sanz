@@ -1,3 +1,5 @@
+// Protects admin-only dashboard routes.
+
 'use client'
 
 import { useRouter } from 'next/navigation'

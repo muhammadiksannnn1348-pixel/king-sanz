@@ -1,3 +1,5 @@
+// Admin login screen.
+
 'use client'
 
 import { useState } from 'react'

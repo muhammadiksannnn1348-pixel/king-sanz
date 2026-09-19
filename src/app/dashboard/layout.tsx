@@ -1,3 +1,5 @@
+// Dashboard wrapper with access protection.
+
 import ProtectedRoute from '../../components/ProtectedRoute'
 import DashboardShell from '../../components/DashboardShell'
 

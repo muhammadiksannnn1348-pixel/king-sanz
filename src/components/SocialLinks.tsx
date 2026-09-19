@@ -1,3 +1,5 @@
+// Social media link component.
+
 import { useEffect } from "react";
 import {
   Github,

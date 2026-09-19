@@ -1,3 +1,5 @@
+// Root layout: global metadata and app shell.
+
 import type { Metadata } from 'next'
 import './globals.css'
 import ServiceWorkerCleanup from '../components/ServiceWorkerCleanup'

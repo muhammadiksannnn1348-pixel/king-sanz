@@ -1,3 +1,5 @@
+// Admin dashboard layout wrapper.
+
 'use client'
 
 import Link from 'next/link'

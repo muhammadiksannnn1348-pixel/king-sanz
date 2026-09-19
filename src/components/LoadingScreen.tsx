@@ -1,3 +1,5 @@
+// Loading indicator for transition states.
+
 import React from 'react';
 
 // Komponen layar loading sederhana yang menampilkan spinner dan teks
