@@ -18,9 +18,9 @@ import { supabase } from '../lib/supabase'
 import AnimatedBackground from './Background'
 
 const navigation = [
-  { href: '/dashboard/projects', label: 'Projects', icon: FolderGit2 },
-  { href: '/dashboard/certificates', label: 'Certificates', icon: Award },
-  { href: '/dashboard/comments', label: 'Comments', icon: MessageSquare },
+  { href: '/admin/dashboard/projects', label: 'Projects', icon: FolderGit2 },
+  { href: '/admin/dashboard/certificates', label: 'Certificates', icon: Award },
+  { href: '/admin/dashboard/comments', label: 'Comments', icon: MessageSquare },
 ]
 
 export default function DashboardShell({ children }: { children: React.ReactNode }) {
@@ -30,7 +30,7 @@ export default function DashboardShell({ children }: { children: React.ReactNode
 
   const logout = async () => {
     await supabase.auth.signOut()
-    router.replace('/login')
+    router.replace('/')
   }
 
   const sidebar = (

@@ -3,7 +3,7 @@
 'use client'
 
 import { useEffect, useState, useMemo, type PropsWithChildren, type ReactNode } from "react";
-import { supabase } from "../../../lib/supabase";
+import { supabase } from "@/lib/supabase";
 import {
   MessageSquare,
   Pin,
@@ -387,4 +387,3 @@ function highlightMatch(text: string, query: string): ReactNode {
     ),
   );
 }
-

@@ -1,5 +1,3 @@
-// Root layout: global metadata and app shell.
-
 import type { Metadata } from 'next'
 import './globals.css'
 import ServiceWorkerCleanup from '../components/ServiceWorkerCleanup'
@@ -9,14 +7,14 @@ export const metadata: Metadata = {
   title: 'Sanz | Full-Stack Web Developer',
   description:
     'Website resmi M.IKSANUDDIN, Full-Stack Web Developer. Saya berfokus pada penciptaan pengalaman digital yang menarik dan selalu berupaya memberikan solusi terbaik dalam setiap proyek yang saya kerjakan.',
-  keywords: ['M.IKSANUDDIN', 'Sanz', 'Full-Stack Web Developer', 'king-sanz', 'Portofolio Iksan', 'xy.sanz.kce'],
+  keywords: ['M.IKSANUDDIN', 'Sanz', 'Full-Stack Web Developer', 'king-sanz', 'Portofolio Iksan', 'xy.sanz.kce', 'ikhsanuddin'],
   authors: [{ name: 'M.IKSANUDDIN' }],
   metadataBase: new URL('https://king-sanz.vercel.app'),
   alternates: {
     canonical: '/',
   },
   icons: {
-    icon: '/logo SZ.png',
+    icon: '/logo%20SZ.png',
   },
   openGraph: {
     type: 'website',

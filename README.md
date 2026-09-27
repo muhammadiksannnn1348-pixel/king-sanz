@@ -1,4 +1,4 @@
-# Sanz Portfolio Website
+# Portofolio Website Sanz
 
 Website portfolio personal berbasis Next.js yang menampilkan profil, pengalaman, proyek, sertifikat, skill, dan kontak. Proyek ini juga dilengkapi dengan halaman detail proyek, splash screen, animasi visual, serta dashboard admin untuk mengelola konten portfolio secara dinamis melalui Supabase.
 

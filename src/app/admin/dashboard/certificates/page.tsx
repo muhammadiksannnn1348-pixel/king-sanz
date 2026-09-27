@@ -3,7 +3,7 @@
 'use client'
 
 import { useEffect, useState, type PropsWithChildren } from 'react'
-import { supabase } from "../../../lib/supabase";
+import { supabase } from "@/lib/supabase";
 import { Award, Upload, Trash2, ImageIcon, Plus } from 'lucide-react'
 
 const Card = ({ children, className = '' }: PropsWithChildren<{ className?: string }>) => (

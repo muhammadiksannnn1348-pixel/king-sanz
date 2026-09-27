@@ -1,7 +1,7 @@
 // Dashboard wrapper with access protection.
 
-import ProtectedRoute from '../../components/ProtectedRoute'
-import DashboardShell from '../../components/DashboardShell'
+import ProtectedRoute from '../../../components/ProtectedRoute'
+import DashboardShell from '../../../components/DashboardShell'
 
 export default function DashboardLayout({ children }: { children: React.ReactNode }) {
   return (

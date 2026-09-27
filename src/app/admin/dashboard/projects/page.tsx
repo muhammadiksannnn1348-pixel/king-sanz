@@ -3,7 +3,7 @@
 'use client'
 
 import { useEffect, useState } from "react";
-import { supabase } from "../../../lib/supabase";
+import { supabase } from "@/lib/supabase";
 import {
   Plus,
   Trash2,
@@ -523,4 +523,3 @@ export default function Projects() {
     </div>
   );
 }
-
