@@ -1,40 +1,27 @@
 import { NextRequest, NextResponse } from "next/server";
 
 const LOGIN_ACCESS_COOKIE = "admin_login_access";
+const LOGIN_PATH = "/auth/login";
 
 export function middleware(request: NextRequest) {
-  const { pathname } = request.nextUrl;
+  const { pathname, searchParams } = request.nextUrl;
   const secretKey = process.env.ADMIN_LOGIN_KEY;
+  const keyFromPath = pathname.startsWith(`${LOGIN_PATH}/`)
+    ? pathname.replace(`${LOGIN_PATH}/`, "")
+    : "";
+  const keyFromQuery = searchParams.get("key") ?? "";
 
   // ==========================================
   // /auth/login/SECRET_KEY
   // ==========================================
-  if (pathname.startsWith("/auth/login/")) {
-    const parts = pathname.split("/").filter(Boolean);
+  if (pathname.startsWith(`${LOGIN_PATH}/`)) {
+    const key = keyFromPath || keyFromQuery;
 
-    // Kata kunci harus tepat:
-    // /auth/login
-    if (parts.length !== 3) {
-      return NextResponse.rewrite(
-        new URL("/404", request.url)
-      );
-    }
-
-    const key = parts[2];
-
-    // Key salah
-    // Jika key salah maka akan menuju ke halaman not-found yang sudah di custom
     if (!secretKey || key !== secretKey) {
-      return NextResponse.rewrite(
-        new URL("/404", request.url)
-      );
+      return NextResponse.rewrite(new URL("/404", request.url));
     }
 
-    // Key benar
-    // Jika key benar maka langsung menuju halaman /Auth/Login
-    const response = NextResponse.redirect(
-      new URL("/auth/login", request.url)
-    );
+    const response = NextResponse.redirect(new URL(LOGIN_PATH, request.url));
 
     response.cookies.set({
       name: LOGIN_ACCESS_COOKIE,
@@ -43,7 +30,7 @@ export function middleware(request: NextRequest) {
       secure: process.env.NODE_ENV === "production",
       sameSite: "lax",
       maxAge: 300,
-      path: "/auth/login",
+      path: "/",
     });
 
     return response;
@@ -52,20 +39,30 @@ export function middleware(request: NextRequest) {
   // ==========================================
   // /auth/login TANPA KEY
   // ==========================================
-  if (pathname === "/auth/login") {
-    const accessCookie = request.cookies.get(
-      LOGIN_ACCESS_COOKIE
-    );
+  if (pathname === LOGIN_PATH) {
+    const accessCookie = request.cookies.get(LOGIN_ACCESS_COOKIE);
 
-    // Belum memasukkan secret key
-    // Jika belum memasukkan kata kunci maka akan menuju pada halaman not-found yang sudah di custom
-    if (accessCookie?.value !== "granted") {
-      return NextResponse.rewrite(
-        new URL("/404", request.url)
-      );
+    if (accessCookie?.value === "granted") {
+      return NextResponse.next();
     }
 
-    return NextResponse.next();
+    if (secretKey && keyFromQuery === secretKey) {
+      const response = NextResponse.next();
+
+      response.cookies.set({
+        name: LOGIN_ACCESS_COOKIE,
+        value: "granted",
+        httpOnly: true,
+        secure: process.env.NODE_ENV === "production",
+        sameSite: "lax",
+        maxAge: 300,
+        path: "/",
+      });
+
+      return response;
+    }
+
+    return NextResponse.rewrite(new URL("/404", request.url));
   }
 
   return NextResponse.next();
