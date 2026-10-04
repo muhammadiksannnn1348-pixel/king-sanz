@@ -2,6 +2,8 @@
 
 import { useEffect, useLayoutEffect, useState } from 'react'
 import { AnimatePresence } from 'framer-motion'
+import AOS from 'aos'
+import 'aos/dist/aos.css'
 import About from './views/About'
 import Contact from './views/Contact'
 import Home from './views/Home'
@@ -25,6 +27,10 @@ export default function LandingPage() {
 
     if (returningFromProject) sessionStorage.removeItem('portfolio-return-path')
     setShowWelcome(false)
+  }, [])
+
+  useEffect(() => {
+    AOS.init({ once: false, duration: 800, offset: 10, mirror: false })
   }, [])
 
   useEffect(() => {

@@ -2,6 +2,7 @@
 
 'use client'
 
+import Image from "next/image";
 import { useEffect, useState } from "react";
 import { supabase } from "@/lib/supabase";
 import {
@@ -92,13 +93,15 @@ const ProjectCard = ({ project, onDelete, onEdit }) => {
     <Card>
       <div className="p-4 flex flex-col h-full">
         {project.Img && (
-          <div className="w-full aspect-[16/8] rounded-xl mb-4 border border-white/8 overflow-hidden bg-white/5">
+          <div className="relative w-full aspect-[16/8] rounded-xl mb-4 border border-white/8 overflow-hidden bg-white/5">
             {!imgLoaded && (
               <div className="w-full h-full animate-pulse bg-white/5" />
             )}
-            <img
+            <Image
               src={project.Img}
-              alt={project.Title}
+              alt={`${project.Title} project preview`}
+              fill
+              sizes="(max-width: 768px) 100vw, 33vw"
               onLoad={() => setImgLoaded(true)}
               className={`w-full h-full object-cover transition-opacity duration-300 ${imgLoaded ? "opacity-100" : "opacity-0 absolute"}`}
             />
@@ -297,10 +300,13 @@ const ProjectForm = ({
           </label>
           <label className="flex items-center gap-4 w-full bg-[#0d0d22] border border-dashed border-white/15 rounded-xl px-4 py-4 cursor-pointer hover:border-indigo-500/40 hover:bg-white/4 transition-all">
             {preview ? (
-              <img
+              <Image
                 src={preview}
+                width={96}
+                height={64}
+                unoptimized
                 className="h-16 w-24 object-cover rounded-lg border border-white/10"
-                alt="preview"
+                alt="Preview of selected project image"
               />
             ) : (
               <div className="w-24 h-16 rounded-lg bg-white/5 flex items-center justify-center border border-white/10">

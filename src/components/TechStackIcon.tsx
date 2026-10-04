@@ -4,6 +4,7 @@
   Catatan: Kode ini digunakan untuk rendering, data, dan logika interaksi pada halaman website.
 */
 import React from 'react';
+import Image from 'next/image';
 
 /*
   TechStackIcon.jsx
@@ -26,9 +27,12 @@ const TechStackIcon = ({ TechStackIcon, Language }) => {
         <div className="absolute -inset-1 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full opacity-0 group-hover:opacity-50 blur transition duration-300"></div>
 
         {/* Gambar icon teknologi: gunakan `alt` yang menjelaskan untuk aksesibilitas */}
-        <img 
-          src={TechStackIcon} 
-          alt={`${Language} icon`} 
+        <Image
+          src={TechStackIcon}
+          alt={`${Language} icon`}
+          width={80}
+          height={80}
+          sizes="(max-width: 768px) 64px, 80px"
           className="relative h-16 w-16 md:h-20 md:w-20 transform transition-transform duration-300"
         />
       </div>

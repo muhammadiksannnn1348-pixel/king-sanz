@@ -1,6 +1,7 @@
 // Certificate card component.
 
 import React, { useState } from "react"
+import Image from "next/image"
 import { Modal, IconButton, Box, Fade, Backdrop, Zoom, Typography } from "@mui/material"
 import CloseIcon from "@mui/icons-material/Close"
 import FullscreenIcon from "@mui/icons-material/Fullscreen"
@@ -62,10 +63,13 @@ const Certificate = ({ ImgSertif }) => {
 						},
 					}}>
 					{/* Gambar sertifikat (klik untuk buka modal) */}
-					<img
+										<Image
 						className="certificate-image"
 						src={ImgSertif}
-						alt="Certificate"
+											alt="Professional certificate earned by M. Iksanuddin"
+											width={1200}
+											height={862}
+											sizes="(max-width: 768px) 100vw, 33vw"
 						style={{
 							width: "100%",
 							height: "auto",
@@ -185,9 +189,12 @@ const Certificate = ({ ImgSertif }) => {
 					</IconButton>
 
 					{/* Gambar ukuran penuh di modal */}
-					<img
+										<Image
 						src={ImgSertif}
-						alt="Certificate Full View"
+											alt="Full-size view of the professional certificate"
+											width={1600}
+											height={1150}
+											sizes="90vw"
 						style={{
 							display: "block",
 							maxWidth: "100%",

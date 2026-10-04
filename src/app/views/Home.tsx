@@ -4,13 +4,11 @@
 
 // Import dasar React dan beberapa hook yang digunakan
 import React, { useState, useEffect, useCallback, memo } from "react"
+import Image from "next/image"
 import type { ComponentType, SVGProps } from "react"
 // Helmet dipakai untuk mengatur head / meta tags pada halaman
 // Ikon dari lucide-react yang dipakai di UI
 import { Github, Mail, ExternalLink, Instagram, Sparkles } from "lucide-react"
-// AOS untuk animasi saat scroll (animate on scroll)
-import AOS from 'aos'
-import 'aos/dist/aos.css'
 
 // SVG custom untuk ikon Discord (dipakai pada social link)
 const DiscordIcon = ({ className, ...props }: SVGProps<SVGSVGElement>) => (
@@ -114,20 +112,6 @@ const Home = () => {
   const [isLoaded, setIsLoaded] = useState(false)
   // isHovering untuk interaksi pada bagian kanan (animasi scale saat hover)
   const [isHovering, setIsHovering] = useState(false)
-
-  // Inisialisasi AOS dan daftarkan listener resize untuk rekonfigurasi AOS
-  useEffect(() => {
-    const initAOS = () => {
-      AOS.init({
-        once: true,
-        offset: 10,
-      });
-    };
-
-    initAOS();
-    window.addEventListener('resize', initAOS);
-    return () => window.removeEventListener('resize', initAOS);
-  }, []);
 
   // Set flag loaded untuk transisi masuk komponen
   useEffect(() => {
@@ -234,10 +218,14 @@ const Home = () => {
                   <div className={`relative lg:left-12 z-10 w-full opacity-90 transform transition-transform duration-500 ${
                     isHovering ? "scale-105" : "scale-100"
                   }`}>
-                    <img
-                      src="Animation1.gif"
-                      alt="Developer Animation"
-                      className={`w-full h-full object-contain transition-all duration-500 ${
+                    <Image
+                      src="/Animation1.gif"
+                      alt="Animated illustration of a developer working on a laptop"
+                      width={800}
+                      height={600}
+                      unoptimized
+                      sizes="(max-width: 1024px) 100vw, 50vw"
+                      className={`w-full h-auto object-contain transition-all duration-500 ${
                         isHovering 
                           ? "scale-[95%] sm:scale-[90%] md:scale-[90%] lg:scale-[90%] rotate-2" 
                           : "scale-[90%] sm:scale-[80%] md:scale-[80%] lg:scale-[80%]"

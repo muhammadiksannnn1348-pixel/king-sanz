@@ -2,6 +2,7 @@
 
 'use client'
 
+import Image from "next/image";
 import { useEffect, useState, useMemo, type PropsWithChildren, type ReactNode } from "react";
 import { supabase } from "@/lib/supabase";
 import {
@@ -243,9 +244,12 @@ export default function Comments() {
                 <div className="flex items-start gap-3 sm:gap-4">
                   {/* Avatar */}
                   <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-gradient-to-br from-indigo-500/20 to-purple-500/20 border border-white/10 flex items-center justify-center shrink-0">
-                    <img
+                    <Image
                       src={comment.profile_image || "/default-avatar.jpg"}
-                      alt="Avatar"
+                      alt={`Profile photo of ${comment.user_name || "anonymous visitor"}`}
+                      width={36}
+                      height={36}
+                      unoptimized
                       className="w-8 h-8 sm:w-9 sm:h-9 rounded-full object-cover"
                     />
                   </div>

@@ -3,18 +3,23 @@
 'use client'
 
 import React, { useEffect, useState, memo, useMemo, useRef } from "react"
+import Image from "next/image"
 import { FileText, Code, Award, Globe, ArrowUpRight, Sparkles, UserCheck } from "lucide-react"
-import AOS from 'aos'
-import 'aos/dist/aos.css'
 
 // ==================== CUSTOM HOOKS ====================
 const useTilt = (intensity = 15) => {
   const ref = useRef<HTMLDivElement | null>(null)
+  const bounds = useRef<DOMRect | null>(null)
   const [style, setStyle] = useState<React.CSSProperties>({})
 
+  const handleMouseEnter = () => {
+    if (ref.current) bounds.current = ref.current.getBoundingClientRect()
+  }
+
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (!ref.current) return
-    const rect = ref.current.getBoundingClientRect()
+    const rect = bounds.current
+    if (!rect) return
+
     const x = (e.clientX - rect.left) / rect.width - 0.5
     const y = (e.clientY - rect.top) / rect.height - 0.5
     setStyle({
@@ -23,12 +28,13 @@ const useTilt = (intensity = 15) => {
   }
 
   const handleMouseLeave = () => {
+    bounds.current = null
     setStyle({
       transform: 'perspective(1000px) rotateY(0deg) rotateX(0deg) scale3d(1, 1, 1)',
     })
   }
 
-  return { ref, style, handleMouseMove, handleMouseLeave }
+  return { ref, style, handleMouseEnter, handleMouseMove, handleMouseLeave }
 }
 
 // ==================== HEADER (UNCHANGED) ====================
@@ -96,6 +102,7 @@ const ProfileImage = memo(() => {
         {/* Main photo with 3D tilt */}
         <div
           ref={tilt.ref}
+          onMouseEnter={tilt.handleMouseEnter}
           onMouseMove={tilt.handleMouseMove}
           onMouseLeave={tilt.handleMouseLeave}
           style={tilt.style}
@@ -109,11 +116,12 @@ const ProfileImage = memo(() => {
             <div className="absolute inset-0 border-4 border-white/10 rounded-full z-20 transition-all duration-700 group-hover:border-white/40" />
             
             {/* Image */}
-            <img
+            <Image
               src="/image.jpeg"
-              alt="Profile"
+              alt="Portrait of M. Iksanuddin, full-stack web developer"
+              fill
+              sizes="(max-width: 640px) 288px, 320px"
               className="w-full h-full object-cover transition-all duration-700 group-hover:scale-110"
-              loading="lazy"
             />
 
             {/* Colored gradient overlays */}
@@ -260,28 +268,6 @@ const AboutPage = () => {
   }, []);
 
   const { totalProjects, totalCertificates, YearExperience } = stats;
-
-  useEffect(() => {
-    const initAOS = () => {
-      AOS.init({
-        once: false, 
-      });
-    };
-
-    initAOS();
-    
-    let resizeTimer: ReturnType<typeof setTimeout> | undefined;
-    const handleResize = () => {
-      if (resizeTimer) clearTimeout(resizeTimer);
-      resizeTimer = setTimeout(initAOS, 250);
-    };
-
-    window.addEventListener('resize', handleResize);
-    return () => {
-      window.removeEventListener('resize', handleResize);
-      clearTimeout(resizeTimer);
-    };
-  }, []);
 
   const statsData = useMemo(() => [
     {

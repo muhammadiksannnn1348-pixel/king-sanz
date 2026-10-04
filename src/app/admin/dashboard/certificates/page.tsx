@@ -2,6 +2,7 @@
 
 'use client'
 
+import Image from 'next/image'
 import { useEffect, useState, type PropsWithChildren } from 'react'
 import { supabase } from "@/lib/supabase";
 import { Award, Upload, Trash2, ImageIcon, Plus } from 'lucide-react'
@@ -35,14 +36,16 @@ const CertCard = ({ cert, onDelete }: { cert: Certificate; onDelete: (id: string
   return (
     <div className="relative group">
       <div className="absolute -inset-0.5 bg-gradient-to-r from-[#6366f1] to-[#a855f7] rounded-2xl blur opacity-10 group-hover:opacity-30 transition duration-500" />
-      <div className="relative bg-white/5 border border-white/12 rounded-2xl overflow-hidden">
+      <div className="relative aspect-[16/11.5] bg-white/5 border border-white/12 rounded-2xl overflow-hidden">
         {/* Skeleton shown until image loads */}
         {!imgLoaded && (
           <div className="w-full aspect-[16/11.5] bg-white/5 animate-pulse" />
         )}
-        <img
+        <Image
           src={cert.Img}
-          alt="Certificate"
+          alt="Professional certificate document"
+          fill
+          sizes="(max-width: 768px) 100vw, 33vw"
           onLoad={() => setImgLoaded(true)}
           className={`w-full aspect-[16/11.5] object-cover group-hover:scale-105 transition-transform duration-500 ${imgLoaded ? 'block' : 'hidden'}`}
         />
@@ -135,7 +138,14 @@ export default function Certificates() {
             }`}
           >
             {preview ? (
-              <img src={preview} alt="preview" className="max-h-40 object-contain rounded-lg p-2" />
+              <Image
+                src={preview}
+                alt="Preview of selected certificate image"
+                width={640}
+                height={460}
+                unoptimized
+                className="max-h-40 w-auto object-contain rounded-lg p-2"
+              />
             ) : (
               <div className="text-center space-y-2 p-6">
                 <div className="w-11 h-11 rounded-full bg-indigo-500/10 border border-indigo-500/20 flex items-center justify-center mx-auto">

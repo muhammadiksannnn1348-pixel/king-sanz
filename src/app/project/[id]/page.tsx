@@ -1,11 +1,8 @@
-// Project detail route for a single portfolio item.
-
 import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import { createClient } from '@supabase/supabase-js'
 import ProjectDetail, { type ProjectDetailData } from '../../../components/ProjectDetail'
 import Footer from '../../../components/Footer'
-import { toSlug } from '../../../lib/slug'
 
 type ProjectRecord = {
   id: string | number
@@ -18,7 +15,7 @@ type ProjectRecord = {
   Img: string | null
 }
 
-async function getProjectBySlug(slug: string): Promise<ProjectRecord | null> {
+async function getProjectById(id: string): Promise<ProjectRecord | null> {
   const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
   const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
   if (!supabaseUrl || !supabaseKey) return null
@@ -27,11 +24,11 @@ async function getProjectBySlug(slug: string): Promise<ProjectRecord | null> {
   const { data, error } = await supabase
     .from('projects')
     .select('id, Title, Description, Features, TechStack, Github, Link, Img')
+    .eq('id', id)
+    .maybeSingle()
 
   if (error || !data) return null
-
-  const project = data.find((item) => item.Title && toSlug(item.Title) === slug)
-  return (project ?? null) as ProjectRecord | null
+  return data as ProjectRecord
 }
 
 function toProjectDetailData(project: ProjectRecord): ProjectDetailData {
@@ -50,14 +47,14 @@ function toProjectDetailData(project: ProjectRecord): ProjectDetailData {
 export async function generateMetadata({
   params,
 }: {
-  params: Promise<{ slug: string }>
+  params: Promise<{ id: string }>
 }): Promise<Metadata> {
-  const { slug } = await params
-  const project = await getProjectBySlug(slug)
+  const { id } = await params
+  const project = await getProjectById(id)
   if (!project) return {}
 
   const description = project.Description || `Detail proyek ${project.Title} oleh Sanz.`
-  const url = `/project/${toSlug(project.Title)}`
+  const url = `/project/${project.id}`
 
   return {
     title: project.Title,
@@ -68,7 +65,6 @@ export async function generateMetadata({
       url,
       title: `${project.Title} | Sanz`,
       description,
-      images: [project.Img || '/Meta.jpg'],
     },
   }
 }
@@ -76,10 +72,10 @@ export async function generateMetadata({
 export default async function ProjectPage({
   params,
 }: {
-  params: Promise<{ slug: string }>
+  params: Promise<{ id: string }>
 }) {
-  const { slug } = await params
-  const project = await getProjectBySlug(slug)
+  const { id } = await params
+  const project = await getProjectById(id)
   if (!project) notFound()
 
   return (
@@ -89,4 +85,3 @@ export default async function ProjectPage({
     </>
   )
 }
-

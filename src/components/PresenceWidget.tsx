@@ -4,6 +4,7 @@
   Catatan: Kode ini digunakan untuk rendering, data, dan logika interaksi pada halaman website.
 */
 import { useEffect, useState } from "react";
+import Image from "next/image";
 import { Music2, Code2, Gamepad2, Headphones } from "lucide-react";
 
 export default function PresenceWidget() {
@@ -132,19 +133,25 @@ export default function PresenceWidget() {
                   
                   {/* Icon/Image */}
                   <div className="relative flex-shrink-0">
-                    <div className="w-14 h-14 rounded-lg overflow-hidden bg-black/20 backdrop-blur-sm ring-2 ring-white/10 group-hover:ring-white/20 transition-all duration-300">
+                    <div className="relative w-14 h-14 rounded-lg overflow-hidden bg-black/20 backdrop-blur-sm ring-2 ring-white/10 group-hover:ring-white/20 transition-all duration-300">
                       {act.image ? (
-                        <img 
+                        <Image
                           src={act.image} 
-                          alt={act.title}
-                          className="w-full h-full object-cover"
+                          alt={`${act.title} artwork`}
+                          fill
+                          sizes="56px"
+                          unoptimized
+                          className="object-cover"
                         />
                       ) : act.iconImage ? (
-                        <div className="w-full h-full flex items-center justify-center p-2">
-                          <img 
+                        <div className="relative w-full h-full flex items-center justify-center p-2">
+                          <Image
                             src={act.iconImage} 
-                            alt={act.title}
-                            className="w-full h-full object-contain"
+                            alt={`${act.title} icon`}
+                            fill
+                            sizes="40px"
+                            unoptimized
+                            className="object-contain"
                           />
                         </div>
                       ) : (
@@ -188,7 +195,7 @@ export default function PresenceWidget() {
                   {/* Spotify Icon - pojok kanan */}
                   {act.type === "spotify" && (
                     <div className="">
-                      <img src="Spotify.png" className="w-auto h-6 opacity-80 group-hover:opacity-100 transition-opacity duration-300" alt="" />
+                      <Image src="/Spotify.png" width={24} height={24} className="w-auto h-6 opacity-80 group-hover:opacity-100 transition-opacity duration-300" alt="Spotify" />
                     </div>
                   )}
 

@@ -6,10 +6,9 @@
 "use client";
 
 import React, { useState, useEffect, useRef, useCallback, memo } from 'react';
+import Image from 'next/image';
 import { createClient } from '@supabase/supabase-js';
 import { MessageCircle, UserCircle2, Loader2, AlertCircle, Send, ImagePlus, X, Pin } from 'lucide-react';
-import AOS from "aos";
-import "aos/dist/aos.css";
 import { supabase } from '../lib/supabase';
 
 type CommentRecord = {
@@ -52,9 +51,11 @@ const Comment = memo(({ comment, formatDate, index: _index, isPinned = false }: 
         <div className="flex items-start gap-3">
             {/* Profile image jika ada, jika tidak tampilkan icon default */}
             {comment.profile_image ? (
-                <img
+                <Image
                     src={comment.profile_image}
-                    alt={`${comment.user_name}'s profile`}
+                    alt={`Profile photo of ${comment.user_name || 'visitor'}`}
+                    width={40}
+                    height={40}
                     className={`w-10 h-10 rounded-full object-cover border-2 flex-shrink-0  ${
                         isPinned ? 'border-indigo-500/50' : 'border-indigo-500/30'
                     }`}
@@ -191,9 +192,12 @@ const CommentForm = memo(({ onSubmit, isSubmitting, error }: CommentFormProps) =
                 <div className="flex items-center gap-4 p-4 bg-white/5 border border-white/10 rounded-xl">
                     {imagePreview ? (
                         <div className="flex items-center gap-4">
-                            <img
+                            <Image
                                 src={imagePreview}
-                                alt="Profile preview"
+                                alt="Preview of selected profile photo"
+                                width={64}
+                                height={64}
+                                unoptimized
                                 className="w-16 h-16 rounded-full object-cover border-2 border-indigo-500/50"
                             />
                             <button
@@ -265,14 +269,6 @@ const Komentar = () => {
     const [pinnedComment, setPinnedComment] = useState(null);
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [error, setError] = useState('');
-
-    useEffect(() => {
-        // Initialize AOS (scroll animations)
-        AOS.init({
-            once: false,
-            duration: 1000,
-        });
-    }, []);
 
     // Fetch pinned comment
     useEffect(() => {

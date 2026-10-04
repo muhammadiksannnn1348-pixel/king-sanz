@@ -13,8 +13,6 @@ import {
 import SocialLinks from "../../components/SocialLinks";
 import Komentar from "../../components/Commentar";
 import Swal from "sweetalert2";
-import AOS from "aos";
-import "aos/dist/aos.css";
 
 const ContactPage = () => {
   const [formData, setFormData] = useState({
@@ -24,13 +22,6 @@ const ContactPage = () => {
   });
 
   const [isSubmitting, setIsSubmitting] = useState(false);
-
-  useEffect(() => {
-    AOS.init({
-      once: false,
-      duration: 800,
-    });
-  }, []);
 
   // ============================================
   // HANDLE INPUT

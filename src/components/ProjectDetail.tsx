@@ -3,6 +3,7 @@
 "use client";
 
 import React, { useEffect, useState, useRef } from "react";
+import Image from "next/image";
 import {
   ArrowLeft,
   ExternalLink,
@@ -21,7 +22,8 @@ import Swal from "sweetalert2";
 import { toSlug } from "../lib/slug";
 import NotFoundPage from "../app/views/404";
 
-type Project = {
+export type ProjectDetailData = {
+  id?: string | number;
   Title: string;
   Description?: string;
   Features?: string[];
@@ -30,6 +32,8 @@ type Project = {
   Link?: string;
   Img?: string;
 };
+
+type Project = ProjectDetailData;
 
 // Helper format URL
 const formatUrl = (url?: string): string => {
@@ -284,13 +288,25 @@ const StarryBackground = () => {
   );
 };
 
-const ProjectDetails = ({ slug }: { slug: string }) => {
-  const [project, setProject] = useState<Project | null>(null);
-  const [hasResolvedProject, setHasResolvedProject] = useState(false);
-  const [isImageLoaded, setIsImageLoaded] = useState(false);
+const ProjectDetails = ({ slug, initialProject }: { slug?: string; initialProject?: Project }) => {
+  const [project, setProject] = useState<Project | null>(initialProject ?? null);
+  const [hasResolvedProject, setHasResolvedProject] = useState(Boolean(initialProject));
 
   useEffect(() => {
     window.scrollTo(0, 0);
+
+    if (initialProject) {
+      setProject({
+        ...initialProject,
+        Features: initialProject.Features || [],
+        TechStack: initialProject.TechStack || [],
+        Github: initialProject.Github || "",
+        Link: initialProject.Link || "",
+      });
+      setHasResolvedProject(true);
+      return;
+    }
+
     const storedProjects = JSON.parse(localStorage.getItem("projects") ?? "[]") as Project[];
     const selectedProject = storedProjects.find((p) => toSlug(p.Title) === slug);
 
@@ -305,7 +321,7 @@ const ProjectDetails = ({ slug }: { slug: string }) => {
       setProject(enhancedProject);
     }
     setHasResolvedProject(true);
-  }, [slug]);
+  }, [slug, initialProject]);
 
   const handleBack = () => {
     sessionStorage.setItem('portfolio-return-path', '/#portofolio');
@@ -327,7 +343,9 @@ const ProjectDetails = ({ slug }: { slug: string }) => {
     );
   }
 
-  const projectUrl = `https://king-sanz.vercel.app/project/${toSlug(project.Title)}`;
+  const projectUrl = project.id
+    ? `https://king-sanz.vercel.app/project/${project.id}`
+    : `https://king-sanz.vercel.app/project/${toSlug(project.Title)}`;
 
   return (
     <>
@@ -433,12 +451,16 @@ const ProjectDetails = ({ slug }: { slug: string }) => {
               <div className="space-y-6 md:space-y-10">
                 <div className="relative rounded-2xl overflow-hidden border border-white/10 shadow-2xl group">
                   <div className="absolute inset-0 bg-gradient-to-t from-[#030014] via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                  <img
-                    src={project.Img}
-                    alt={project.Title}
-                    className="w-full object-cover transform transition-transform duration-700 will-change-transform group-hover:scale-105"
-                    onLoad={() => setIsImageLoaded(true)}
-                  />
+                  {project.Img && (
+                    <Image
+                      src={project.Img}
+                      alt={`${project.Title} project preview`}
+                      width={1600}
+                      height={900}
+                      sizes="(max-width: 1024px) 100vw, 50vw"
+                      className="w-full h-auto object-cover transform transition-transform duration-700 will-change-transform group-hover:scale-105"
+                    />
+                  )}
                   <div className="absolute inset-0 border-2 border-white/0 group-hover:border-white/10 transition-colors duration-300 rounded-2xl" />
                 </div>
 

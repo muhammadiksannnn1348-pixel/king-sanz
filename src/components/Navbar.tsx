@@ -38,25 +38,13 @@ const Navbar = () => {
 
     // Effect untuk memantau scroll dan menentukan section aktif
     useEffect(() => {
-        const handleScroll = () => {
-            setScrolled(window.scrollY > 20); // set scrolled jika lebih dari 20px
+        let sections: { id: string; offset: number; height: number }[] = [];
+        let scrollFrame = 0;
+        let measureFrame = 0;
 
-            // Cari posisi tiap section (offset top dan tinggi)
-            const sections = navItems
-                .map((item): { id: string; offset: number; height: number } | null => {
-                    const section = document.querySelector(item.href);
-                    if (section) {
-                        const element = section as HTMLElement;
-                        return {
-                            id: item.href.replace("#", ""),
-                            offset: element.offsetTop - 550,
-                            height: element.offsetHeight,
-                        };
-                    }
-                    return null;
-                })
-                .filter((section): section is { id: string; offset: number; height: number } => Boolean(section));
-
+        const updateScrollState = () => {
+            scrollFrame = 0;
+            setScrolled(window.scrollY > 20);
             const currentPosition = window.scrollY;
             const active = sections.find(
                 (section) =>
@@ -69,9 +57,54 @@ const Navbar = () => {
             }
         };
 
-        window.addEventListener("scroll", handleScroll);
-        handleScroll(); // panggil sekali agar state sinkron saat load
-        return () => window.removeEventListener("scroll", handleScroll);
+        const scheduleScrollUpdate = () => {
+            if (!scrollFrame) {
+                scrollFrame = window.requestAnimationFrame(updateScrollState);
+            }
+        };
+
+        const measureSections = () => {
+            measureFrame = 0;
+            sections = navItems
+                .map((item): { id: string; offset: number; height: number } | null => {
+                    const section = document.querySelector<HTMLElement>(item.href);
+                    if (!section) return null;
+
+                    return {
+                        id: item.href.slice(1),
+                        offset: section.offsetTop - 550,
+                        height: section.offsetHeight,
+                    };
+                })
+                .filter((section): section is { id: string; offset: number; height: number } => Boolean(section));
+            scheduleScrollUpdate();
+        };
+
+        const scheduleMeasure = () => {
+            if (!measureFrame) {
+                measureFrame = window.requestAnimationFrame(measureSections);
+            }
+        };
+
+        const sectionElements = navItems
+            .map((item) => document.querySelector<HTMLElement>(item.href))
+            .filter((section): section is HTMLElement => Boolean(section));
+        const resizeObserver = typeof ResizeObserver !== "undefined"
+            ? new ResizeObserver(scheduleMeasure)
+            : null;
+        sectionElements.forEach((section) => resizeObserver?.observe(section));
+
+        window.addEventListener("scroll", scheduleScrollUpdate, { passive: true });
+        window.addEventListener("resize", scheduleMeasure);
+        scheduleMeasure();
+
+        return () => {
+            window.removeEventListener("scroll", scheduleScrollUpdate);
+            window.removeEventListener("resize", scheduleMeasure);
+            resizeObserver?.disconnect();
+            window.cancelAnimationFrame(scrollFrame);
+            window.cancelAnimationFrame(measureFrame);
+        };
     }, []);
 
     // Effect untuk mengunci scroll body saat menu mobile terbuka
