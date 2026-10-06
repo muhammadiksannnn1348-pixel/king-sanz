@@ -50,7 +50,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'Ryujin Sanz | Full-Stack Web Developer',
     description:
-      'Portofolio M. Iksanuddin, Full-Stack Web Developer yang berfokus pada produk digital modern dengan performa tinggi dan desain yang intuitif.',
+      'Portofolio M. Iksanuddin, Full-Stack Web Developer yang membangun aplikasi web modern dengan performa cepat, desain intuitif, dan pengalaman pengguna yang nyaman. Lihat proyek-proyek terbaik saya dan mari berkolaborasi.',
     url: '/',
     siteName: 'Ryujin Sanz',
     type: 'website',
