@@ -1,16 +1,18 @@
 'use client'
 
 import { useEffect, useLayoutEffect, useState } from 'react'
+import dynamic from 'next/dynamic'
 import { AnimatePresence } from 'framer-motion'
 import AOS from 'aos'
-import 'aos/dist/aos.css'
-import About from './views/About'
-import Contact from './views/Contact'
-import Home from './views/Home'
-import Portofolio from './views/Portofolio'
+import './aos.css'
 import WelcomeScreen from './views/WelcomeScreen'
-import Footer from '../components/Footer'
-import Navbar from '../components/Navbar'
+
+const About = dynamic(() => import('./views/About'))
+const Contact = dynamic(() => import('./views/Contact'))
+const Home = dynamic(() => import('./views/Home'))
+const Portofolio = dynamic(() => import('./views/Portofolio'))
+const Footer = dynamic(() => import('../components/Footer'))
+const Navbar = dynamic(() => import('../components/Navbar'))
 
 const useIsomorphicLayoutEffect = typeof window !== 'undefined' ? useLayoutEffect : useEffect
 
@@ -30,7 +32,34 @@ export default function LandingPage() {
   }, [])
 
   useEffect(() => {
-    AOS.init({ once: false, duration: 800, offset: 10, mirror: false })
+    void import('./views/Home')
+    void import('../components/Navbar')
+  }, [])
+
+  useEffect(() => {
+    let refreshFrame = 0
+    const containsAosElement = (node: Node) =>
+      node instanceof Element && (node.matches('[data-aos]') || Boolean(node.querySelector('[data-aos]')))
+    const observer = new MutationObserver((mutations) => {
+      const hasAosChanges = mutations.some((mutation) =>
+        [...mutation.addedNodes, ...mutation.removedNodes].some(containsAosElement)
+      )
+
+      if (!hasAosChanges || refreshFrame) return
+
+      refreshFrame = window.requestAnimationFrame(() => {
+        refreshFrame = 0
+        AOS.refreshHard()
+      })
+    })
+
+    AOS.init({ once: false, duration: 800, offset: 10, mirror: false, disableMutationObserver: true })
+    observer.observe(document.body, { childList: true, subtree: true })
+
+    return () => {
+      observer.disconnect()
+      if (refreshFrame) window.cancelAnimationFrame(refreshFrame)
+    }
   }, [])
 
   useEffect(() => {

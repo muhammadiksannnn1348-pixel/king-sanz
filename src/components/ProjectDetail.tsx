@@ -2,7 +2,7 @@
 
 "use client";
 
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import Image from "next/image";
 import {
   ArrowLeft,
@@ -19,11 +19,9 @@ import {
   Code,
 } from "lucide-react";
 import Swal from "sweetalert2";
-import { toSlug } from "../lib/slug";
-import NotFoundPage from "../app/views/404";
 
 export type ProjectDetailData = {
-  id?: string | number;
+  id: string | number;
   Title: string;
   Description?: string;
   Features?: string[];
@@ -288,64 +286,25 @@ const StarryBackground = () => {
   );
 };
 
-const ProjectDetails = ({ slug, initialProject }: { slug?: string; initialProject?: Project }) => {
-  const [project, setProject] = useState<Project | null>(initialProject ?? null);
-  const [hasResolvedProject, setHasResolvedProject] = useState(Boolean(initialProject));
+const ProjectDetails = ({ initialProject }: { initialProject: Project }) => {
+  const project: Project = {
+    ...initialProject,
+    Features: initialProject.Features || [],
+    TechStack: initialProject.TechStack || [],
+    Github: initialProject.Github || "",
+    Link: initialProject.Link || "",
+  };
 
   useEffect(() => {
     window.scrollTo(0, 0);
-
-    if (initialProject) {
-      setProject({
-        ...initialProject,
-        Features: initialProject.Features || [],
-        TechStack: initialProject.TechStack || [],
-        Github: initialProject.Github || "",
-        Link: initialProject.Link || "",
-      });
-      setHasResolvedProject(true);
-      return;
-    }
-
-    const storedProjects = JSON.parse(localStorage.getItem("projects") ?? "[]") as Project[];
-    const selectedProject = storedProjects.find((p) => toSlug(p.Title) === slug);
-
-    if (selectedProject) {
-      const enhancedProject: Project = {
-        ...selectedProject,
-        Features: selectedProject.Features || [],
-        TechStack: selectedProject.TechStack || [],
-        Github: selectedProject.Github || "",
-        Link: selectedProject.Link || "",
-      };
-      setProject(enhancedProject);
-    }
-    setHasResolvedProject(true);
-  }, [slug, initialProject]);
+  }, []);
 
   const handleBack = () => {
     sessionStorage.setItem('portfolio-return-path', '/#portofolio');
     window.history.back();
   };
 
-  if (!project) {
-    if (hasResolvedProject) {
-      return <NotFoundPage />;
-    }
-
-    return (
-      <div className="min-h-screen bg-[#030014] flex items-center justify-center">
-        <div className="text-center space-y-6">
-          <div className="w-16 h-16 md:w-24 md:h-24 mx-auto border-4 border-blue-500/30 border-t-blue-500 rounded-full animate-spin" />
-          <h2 className="text-xl md:text-3xl font-bold text-white">Loading Project...</h2>
-        </div>
-      </div>
-    );
-  }
-
-  const projectUrl = project.id
-    ? `https://king-sanz.vercel.app/project/${project.id}`
-    : `https://king-sanz.vercel.app/project/${toSlug(project.Title)}`;
+  const projectUrl = `https://king-sanz.vercel.app/project/${project.id}`;
 
   return (
     <>

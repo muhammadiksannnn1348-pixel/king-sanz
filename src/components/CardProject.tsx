@@ -4,7 +4,6 @@ import React from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { ExternalLink, ArrowRight } from "lucide-react";
-import { toSlug } from "../lib/slug";
 
 const CardProject = ({
   Img,

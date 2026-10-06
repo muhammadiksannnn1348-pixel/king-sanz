@@ -73,34 +73,6 @@ textarea {
 	outline-offset: 3px;
 }
 
-/* Animasi kustom 'blob' untuk elemen yang mengambang */
-@keyframes blob {
-	/* Awal animasi: posisi awal */
-	0%,
-	100% {
-		transform: translateY(0);
-	}
-	/* Tengah animasi: naik 20px */
-	50% {
-		transform: translateY(-20px);
-	}
-}
-
-/* Kelas yang menambahkan animasi blob dengan durasi 8s dan loop */
-.animate-blob {
-	animation: blob 8s infinite;
-}
-
-/* Kelas helper untuk menunda animasi 2 detik */
-.animation-delay-2000 {
-	animation-delay: 2s;
-}
-
-/* Kelas helper untuk menunda animasi 4 detik */
-.animation-delay-4000 {
-	animation-delay: 4s;
-}
-
 /* Gaya scrollbar kustom (WebKit browsers: Chrome, Edge, Safari) */
 ::-webkit-scrollbar {
 	/* Lebar scrollbar vertikal */
@@ -169,57 +141,6 @@ textarea {
 	/* Memberi tahu browser akan sering berubah sehingga performa ditingkatkan */
 	will-change: transform, opacity !important;
 }
-
-/* Animasi garis 'shine' untuk efek kilau */
-@keyframes shine {
-	/* Mulai di sebelah kiri elemen */
-	from {
-		left: -100%;
-	}
-	/* Bergerak melewati elemen sampai jauh di kanan */
-	to {
-		left: 200%;
-	}
-}
-
-/* Kelas helper untuk menambahkan animasi shine */
-.animate-shine {
-	animation: shine 1.5s ease-in-out infinite;
-}
-
-@keyframes profile-float {
-	0%, 100% { transform: translateY(0); }
-	50% { transform: translateY(-20px); }
-}
-
-@keyframes profile-spin-slower {
-	to { transform: rotate(360deg); }
-}
-
-@keyframes profile-spin-slow {
-	to { transform: rotate(360deg); }
-}
-
-@keyframes profile-spin-reverse {
-	to { transform: rotate(-360deg); }
-}
-
-@keyframes profile-scan {
-	0% { transform: translateY(-100%); }
-	100% { transform: translateY(400%); }
-}
-
-@keyframes profile-gradient-rotate {
-	0% { filter: hue-rotate(0deg); }
-	100% { filter: hue-rotate(360deg); }
-}
-
-.animate-float { animation: profile-float 4s ease-in-out infinite; }
-.animate-spin-slower { animation: profile-spin-slower 8s linear infinite; }
-.animate-spin-slow { animation: profile-spin-slow 20s linear infinite; }
-.animate-spin-reverse { animation: profile-spin-reverse 25s linear infinite; }
-.animate-scan { animation: profile-scan 3s linear infinite; }
-.animate-gradient-rotate { animation: profile-gradient-rotate 8s linear infinite; }
 
 /* Contoh media query untuk preferensi warna gelap (dikomentari)
 	 Jika ingin mengaktifkan, hapus komentar di bawah ini */

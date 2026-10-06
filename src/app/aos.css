@@ -1,0 +1,48 @@
+[data-aos] {
+	opacity: 0;
+	transition-property: opacity, transform;
+	transition-duration: var(--aos-duration, 800ms);
+	transition-delay: 0ms;
+	transition-timing-function: ease;
+}
+
+[data-aos].aos-animate {
+	opacity: 1;
+	transform: translateZ(0);
+	transition-delay: var(--aos-delay, 0ms);
+}
+
+[data-aos="fade-up"] { transform: translate3d(0, 100px, 0); }
+[data-aos="fade-down"] { transform: translate3d(0, -100px, 0); }
+[data-aos="fade-right"] { transform: translate3d(-100px, 0, 0); }
+[data-aos="fade-left"] { transform: translate3d(100px, 0, 0); }
+[data-aos="fade-up-left"] { transform: translate3d(100px, 100px, 0); }
+[data-aos="fade-up-right"] { transform: translate3d(-100px, 100px, 0); }
+[data-aos="zoom-in-up"] { transform: scale(0.6) translate3d(0, 100px, 0); }
+
+[data-aos-duration="600"] { --aos-duration: 600ms; }
+[data-aos-duration="800"] { --aos-duration: 800ms; }
+[data-aos-duration="1000"] { --aos-duration: 1000ms; }
+[data-aos-duration="1100"] { --aos-duration: 1100ms; }
+[data-aos-duration="1200"] { --aos-duration: 1200ms; }
+[data-aos-duration="1300"] { --aos-duration: 1300ms; }
+[data-aos-duration="1400"] { --aos-duration: 1400ms; }
+[data-aos-duration="1500"] { --aos-duration: 1500ms; }
+[data-aos-duration="1700"] { --aos-duration: 1700ms; }
+
+[data-aos-delay="100"] { --aos-delay: 100ms; }
+[data-aos-delay="200"] { --aos-delay: 200ms; }
+[data-aos-delay="300"] { --aos-delay: 300ms; }
+[data-aos-delay="400"] { --aos-delay: 400ms; }
+[data-aos-delay="500"] { --aos-delay: 500ms; }
+[data-aos-delay="600"] { --aos-delay: 600ms; }
+[data-aos-delay="700"] { --aos-delay: 700ms; }
+[data-aos-delay="800"] { --aos-delay: 800ms; }
+[data-aos-delay="900"] { --aos-delay: 900ms; }
+[data-aos-delay="1000"] { --aos-delay: 1000ms; }
+[data-aos-delay="1100"] { --aos-delay: 1100ms; }
+[data-aos-delay="1200"] { --aos-delay: 1200ms; }
+[data-aos-delay="1300"] { --aos-delay: 1300ms; }
+[data-aos-delay="1400"] { --aos-delay: 1400ms; }
+[data-aos-delay="1500"] { --aos-delay: 1500ms; }
+[data-aos-delay="1600"] { --aos-delay: 1600ms; }

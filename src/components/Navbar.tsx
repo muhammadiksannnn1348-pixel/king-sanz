@@ -3,6 +3,7 @@
 'use client'
 
 import React, { useState, useEffect } from "react";
+import { motion } from "framer-motion";
 import { Menu, X } from "lucide-react";
 import { Zap } from "lucide-react"
 
@@ -132,7 +133,10 @@ const Navbar = () => {
     };
 
     return (
-        <nav
+        <motion.nav
+            initial={{ opacity: 0, y: -12 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
             className={`fixed w-full top-0 z-50 transition-all duration-500 ${isOpen
                 ? "bg-[#030014]"
                 : scrolled
@@ -229,7 +233,7 @@ const Navbar = () => {
                     ))}
                 </div>
             </div>
-        </nav>
+        </motion.nav>
     );
 };
 

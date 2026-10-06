@@ -19,7 +19,7 @@ const DiscordIcon = ({ className, ...props }: SVGProps<SVGSVGElement>) => (
 
 // Badge kecil yang menandakan status/CTA, dioptimalkan untuk performa dengan memo
 const StatusBadge = memo(() => (
-  <div className="inline-block lg:mx-0 mt-10">
+  <div className="inline-block lg:mx-0 mt-20">
     <div className="relative group cursor-default">
       <div className="absolute -inset-0.5 bg-gradient-to-r from-[#6366f1] to-[#a855f7] rounded-full blur-sm opacity-20 group-hover:opacity-40 transition-all duration-500"></div>
       <div className="relative px-4 sm:px-4 py-2 rounded-full bg-black/40 backdrop-blur-xl border border-white/10 group-hover:border-white/20 group-hover:scale-[1.02] transition-all duration-300">
@@ -34,7 +34,7 @@ const StatusBadge = memo(() => (
 
 // Judul utama halaman, dipisahkan sebagai komponen kecil dan dimemo untuk efisiensi render
 const MainTitle = memo(() => (
-  <div className="space-y-2" data-aos="fade-up" data-aos-delay="600">
+  <div className="space-y-2" data-aos="fade-up" data-aos-delay="200">
     <h1 className="text-5xl sm:text-6xl md:text-6xl lg:text-6xl xl:text-6xl font-bold tracking-tight">
       <span className="relative inline-block">
         <span className="absolute -inset-2 bg-gradient-to-r from-[#6366f1] to-[#a855f7] blur-xl opacity-10"></span>
@@ -93,7 +93,7 @@ const SocialLink = memo(({ icon: Icon, link, label }: { icon: ComponentType<{ cl
 const TYPING_SPEED = 100; // ms per karakter saat mengetik
 const ERASING_SPEED = 50; // ms per karakter saat menghapus
 const PAUSE_DURATION = 2000; // jeda setelah kata selesai diketik
-const WORDS = ["I am a student", "Tech Enthusiast", "Software Engineer", "Web Developer", "UI/UX Designer", "Graphic Designer"]; // kata-kata yang berganti-ganti
+const WORDS = ["I am a student", "Tech Enthusiast", "Software Engineer", "Web Developer", "UI/UX Designer", "Graphic Designer", ""]; // kata-kata yang berganti-ganti
 const TECH_STACK = ["React", "Javascript", "Node.js", "Tailwind"]; // daftar teknologi yang ditampilkan
 // Daftar social link yang digunakan di bagian kiri
 const SOCIAL_LINKS = [
@@ -155,7 +155,7 @@ const Home = () => {
   return (
     <>
       <div className="min-h-screen bg-[#030014] overflow-hidden px-[5%] sm:px-[5%] lg:px-[10%]" id="home">
-        <div className={`relative z-10 transition-all duration-1000 ${isLoaded ? "opacity-100" : "opacity-0"}`}>
+        <div className={`relative z-10 transition-all duration-600 ${isLoaded ? "opacity-100" : "opacity-0"}`}>
           <div className="container mx-auto min-h-screen">
             <div className="flex flex-col lg:flex-row items-center justify-center h-screen md:justify-between gap-0 sm:gap-12 lg:gap-20">
               {/* Left Column */}

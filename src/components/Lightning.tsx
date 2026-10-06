@@ -22,8 +22,8 @@ const Lightning = ({ hue = 230, xOffset = 0, speed = 1, intensity = 2, size = 1 
 
     // Sesuaikan resolusi canvas ke ukuran tampilan untuk ketajaman
     const resizeCanvas = () => {
-      canvas.width = canvas.clientWidth;
-      canvas.height = canvas.clientHeight;
+      canvas.width = Math.max(1, Math.round(canvas.clientWidth * 0.75));
+      canvas.height = Math.max(1, Math.round(canvas.clientHeight * 0.75));
     };
     resizeCanvas();
     window.addEventListener('resize', resizeCanvas);
@@ -54,7 +54,7 @@ const Lightning = ({ hue = 230, xOffset = 0, speed = 1, intensity = 2, size = 1 
       uniform float uIntensity;
       uniform float uSize;
       
-      #define OCTAVE_COUNT 10
+      #define OCTAVE_COUNT 6
 
       vec3 hsv2rgb(vec3 c) {
           vec3 rgb = clamp(abs(mod(c.x * 6.0 + vec3(0.0,4.0,2.0), 6.0) - 3.0) - 1.0, 0.0, 1.0);
@@ -180,7 +180,6 @@ const Lightning = ({ hue = 230, xOffset = 0, speed = 1, intensity = 2, size = 1 
     let animationFrameId;
     const startTime = performance.now();
     const render = () => {
-      resizeCanvas();
       gl.viewport(0, 0, canvas.width, canvas.height);
       gl.uniform2f(iResolutionLocation, canvas.width, canvas.height);
       const currentTime = performance.now();
