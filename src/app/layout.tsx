@@ -35,6 +35,7 @@ export const metadata: Metadata = {
     'iksan',
     'Ryujin portofolio',
     'Ryujin web',
+    'Ryujin Sanz'
   ],
 
   authors: [{ name: 'M.IKSANUDDIN' }],
