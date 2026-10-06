@@ -51,12 +51,21 @@ export const metadata: Metadata = {
     icon: '/logo%20SZ.jpg',
   },
 
-  openGraph: {
+    openGraph: {
     type: 'website',
     url: 'https://www.ryujin-sanz.my.id/',
+    siteName: 'Ryujin Sanz',
+    locale: 'id_ID',
     title: 'Sanz | Full-Stack Web Developer',
     description:
-      'Portofolio website ',
+      'Portofolio website M. Iksanuddin, Full-Stack Web Developer.',
+  },
+
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Sanz | Full-Stack Web Developer',
+    description:
+      'Portofolio website M. Iksanuddin, Full-Stack Web Developer.',
   },
 }
 

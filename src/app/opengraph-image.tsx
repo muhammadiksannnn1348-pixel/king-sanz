@@ -1,8 +1,6 @@
 // app/opengraph-image.tsx
 import { ImageResponse } from "next/og";
 
-export const runtime = "edge";
-
 export const alt = "M. Iksanuddin (King-Sanz) — Full Stack Web Developer";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
