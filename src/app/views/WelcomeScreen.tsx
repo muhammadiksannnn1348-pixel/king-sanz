@@ -414,8 +414,8 @@ const WelcomeScreen = ({ onLoadingComplete }: WelcomeScreenProps) => {
                     <span className="bg-gradient-to-r from-indigo-400 to-purple-400 bg-clip-text text-transparent">
                       <TypewriterEffect
                         text="ryujin-sanz.my.id"
-                        speed={80}
-                        startDelay={1000}
+                        speed={75}
+                        startDelay={2000}
                         onComplete={() => setTypingDone(true)}
                       />
                     </span>
