@@ -1,211 +1,176 @@
-# Portofolio Website Sanz
+# Penjelasan Website Portofolio Sanz
 
-Website portfolio personal berbasis Next.js yang menampilkan profil, pengalaman, proyek, sertifikat, skill, dan kontak. Proyek ini juga dilengkapi dengan halaman detail proyek, splash screen, animasi visual, serta dashboard admin untuk mengelola konten portfolio secara dinamis melalui Supabase.
+## Ringkasan
 
-## Deskripsi Proyek
+Website ini adalah portofolio pribadi M. Iksanuddin (Sanz), dibuat dengan Next.js App Router, React, TypeScript, dan Tailwind CSS. Halaman utama memperkenalkan profil dan menampilkan bagian About, Portfolio, Contact, serta footer. Data proyek, sertifikat, dan komentar terhubung ke Supabase; tersedia juga dashboard admin untuk mengelola proyek, sertifikat, dan komentar.
 
-Proyek ini dibuat untuk menampilkan portfolio digital pribadi dengan tampilan modern, interaktif, dan responsif. Fokus utama aplikasi ini adalah:
+Website memiliki halaman detail untuk setiap proyek, splash screen, animasi antarmuka, metadata SEO, sitemap, dan tampilan yang menyesuaikan ukuran layar.
 
-- menampilkan profil profesional dan bidang keahlian
-- menampilkan daftar proyek dengan detail per item
-- menampilkan sertifikat dan stack teknologi
-- menerima komentar atau kontak dari pengunjung
-- menyediakan panel admin untuk mengelola data secara aman
+## Fitur
 
-Aplikasi ini dibangun menggunakan Next.js App Router, Tailwind CSS, dan Supabase untuk autentikasi, database, serta storage media.
+### Halaman portfolio
 
-## Fitur Utama
+Halaman `/` menampilkan splash screen sebelum bagian utama. Pengunjung dapat menjelajahi bagian Home, About, Portofolio, dan Contact melalui navigasi satu halaman. Bagian portfolio memiliki tab Projects, Certificates, dan Tech Stack; data proyek dan sertifikat dimuat dari Supabase dan disimpan sementara di `localStorage` agar dapat ditampilkan lebih cepat saat kunjungan berikutnya.
 
-### Landing Page Portfolio
+Bagian Contact menyediakan dua cara interaksi:
 
-Halaman utama terdiri dari beberapa bagian utama:
+- Form pesan yang mengirimkan data melalui FormSubmit.
+- Form komentar pengunjung dengan nama, pesan, dan foto profil opsional. Komentar ditampilkan pada website dan diperbarui melalui Supabase Realtime.
 
-- Welcome Screen / splash screen saat pertama kali dibuka
-- Home untuk memperkenalkan profil dan fokus keahlian
-- About untuk menampilkan informasi personal dan detail portfolio
-- Portofolio untuk menampilkan proyek, sertifikat, dan teknologi
-- Contact untuk form kontak dan informasi komunikasi
-- Footer dengan tautan sosial dan link penting
+### Detail proyek
 
-### Detail Project Per Slug
+Setiap kartu proyek dapat membuka halaman `/project/[id]`, misalnya `/project/1`. Nilai `[id]` adalah ID proyek di tabel `projects`. Halaman mengambil data proyek langsung dari Supabase dan menampilkan gambar, deskripsi, daftar fitur, teknologi, tautan demo, serta repository GitHub bila tersedia. Jika ID tidak ditemukan atau konfigurasi Supabase tidak tersedia, halaman akan menampilkan halaman 404.
 
-Setiap proyek dapat dibuka melalui route berikut:
+### Dashboard admin
 
-```text
-/project/[slug]
-```
+Halaman login tersedia di `/auth/login` dan menggunakan Supabase Auth dengan email dan password. Setelah login, aplikasi memeriksa bahwa baris pada tabel `profiles` untuk pengguna tersebut memiliki `role = admin`. Pengguna tanpa role admin tidak dapat mengakses dashboard.
 
-Halaman ini menampilkan:
+Dashboard menyediakan fitur berikut:
 
-- judul proyek
-- deskripsi proyek
-- teknologi yang dipakai
-- fitur utama
-- tautan demo
-- tautan GitHub
-- gambar proyek
-- halaman 404 jika data tidak ditemukan
+- **Projects**: menambah, mengubah, dan menghapus proyek beserta gambar, deskripsi, teknologi, fitur, tautan demo, dan tautan GitHub.
+- **Certificates**: mengunggah dan menghapus gambar sertifikat.
+- **Comments**: mencari, memfilter, menyematkan, dan menghapus komentar pengunjung.
 
-### Integrasi Supabase
+Route `/admin` dan `/admin/dashboard` mengarahkan pengguna ke pengelolaan proyek. Kebijakan keamanan data tetap harus diterapkan melalui Supabase RLS; pemeriksaan role di antarmuka bukan pengganti kebijakan database.
 
-Semua data konten dikelola melalui Supabase, termasuk:
+### Tampilan, animasi, dan metadata
 
-- autentikasi admin
-- data proyek
-- data sertifikat
-- data komentar
-- media upload gambar
+Antarmuka menggunakan Tailwind CSS dan Material UI untuk elemen tab. Framer Motion dan AOS dipakai untuk transisi dan animasi saat halaman dibuka maupun saat konten terlihat. Website juga menyediakan halaman 404 kustom, metadata Open Graph, `robots.txt`, dan sitemap yang menyertakan proyek dari Supabase.
 
-### UI Responsif dan Animasi
+## Teknologi
 
-Antarmuka dirancang agar responsif di berbagai ukuran layar. Beberapa elemen yang dibuat interaktif meliputi:
-
-- navbar dengan efek scroll
-- background animasi
-- welcome screen dengan transisi
-- kartu proyek dan sertifikat
-- halaman dashboard yang modern
-- animasi transisi menggunakan Framer Motion
-
-## Stack Teknologi
-
-### Frontend
-
-- Next.js 15
-- React 18
+- Next.js 15 dan React 18
 - TypeScript
-- Tailwind CSS
-- Material UI
-- Lucide React
-- React Icons
+- Tailwind CSS dan Material UI
+- Supabase Auth, Database, Storage, Realtime, dan Supabase SSR
+- Framer Motion, AOS, Lucide React, dan SweetAlert2
+- ESLint dan TypeScript untuk pemeriksaan kode
 
-### Animasi dan UI Enhancement
+## Route
 
-- Framer Motion
-- GSAP
-- AOS
-- @react-spring/web
-- Typewriter Effect
+| Route | Keterangan |
+| --- | --- |
+| `/` | Halaman utama portfolio |
+| `/project/[id]` | Detail proyek berdasarkan ID Supabase |
+| `/auth/login` | Form login admin |
+| `/admin` | Mengarahkan ke dashboard proyek |
+| `/admin/dashboard` | Mengarahkan ke dashboard proyek |
+| `/admin/dashboard/projects` | Pengelolaan proyek |
+| `/admin/dashboard/certificates` | Pengelolaan sertifikat |
+| `/admin/dashboard/comments` | Moderasi komentar |
+| Route yang tidak tersedia | Halaman 404 kustom |
 
-### Backend & Data
-
-- Supabase
-- Supabase Auth
-- Supabase Storage
-- Supabase SSR
-
-### Tools Lain
-
-- ESLint
-- PostCSS
-- Vercel-ready deployment
-
-### Design Reference / UI Inspiration
-
-- React Bits-inspired visual patterns dan interaksi UI
-- Custom component styling untuk efek neon, glassmorphism, dan motion-based landing page
-
-> Catatan: React Bits adalah referensi desain dan pola UI yang terinspirasi dari proyek ini, bukan dependency resmi yang terpasang di package.json saat ini.
-
-## Struktur Folder Utama
+## Struktur utama
 
 ```text
 src/
 ├── app/
-│   ├── dashboard/
-│   │   ├── certificates/
-│   │   ├── comments/
-│   │   ├── projects/
+│   ├── admin/dashboard/
+│   │   ├── certificates/page.tsx
+│   │   ├── comments/page.tsx
+│   │   ├── projects/page.tsx
 │   │   └── layout.tsx
-│   ├── login/
-│   │   └── page.tsx
-│   ├── project/
-│   │   └── [slug]/
-│   │       └── page.tsx
+│   ├── auth/login/page.tsx
+│   ├── project/[id]/page.tsx
+│   ├── views/
+│   │   ├── About.tsx
+│   │   ├── Contact.tsx
+│   │   ├── Home.tsx
+│   │   ├── Portofolio.tsx
+│   │   └── WelcomeScreen.tsx
 │   ├── globals.css
 │   ├── layout.tsx
 │   ├── not-found.tsx
 │   └── page.tsx
 ├── components/
-│   ├── Background.tsx
 │   ├── CardProject.tsx
 │   ├── Certificate.tsx
 │   ├── Commentar.tsx
 │   ├── DashboardShell.tsx
-│   ├── Footer.tsx
-│   ├── InputField.tsx
-│   ├── Modal.tsx
-│   ├── Navbar.tsx
 │   ├── ProjectDetail.tsx
-│   ├── ProtectedRoute.tsx
-│   └── ...
-├── lib/
-│   ├── slug.ts
-│   └── supabase.ts
-├── types/
-│   └── styles.d.ts
-└── assets/
+│   └── ProtectedRoute.tsx
+└── lib/
+    └── supabase.ts
 ```
 
-## Route Aplikasi
+## Menjalankan secara lokal
 
-| Route | Keterangan |
-| --- | --- |
-| `/` | Halaman utama portfolio |
-| `/project/[slug]` | Detail proyek berdasarkan slug |
-| `*` | Halaman 404 |
+Persyaratan: Node.js 18.18 atau lebih baru, npm, serta project Supabase untuk fitur yang menggunakan database.
 
-## Persyaratan Sistem
+1. Pasang dependency:
 
-Sebelum menjalankan proyek, pastikan perangkat Anda sudah memiliki:
+   ```bash
+   npm install
+   ```
 
-- Node.js 18+
-- npm atau package manager lain yang kompatibel
-- akun Supabase aktif
+2. Buat file `.env.local` di root project dan isi konfigurasi Supabase:
 
-## Perintah NPM
+   ```env
+   NEXT_PUBLIC_SUPABASE_URL=https://your-project.supabase.co
+   NEXT_PUBLIC_SUPABASE_ANON_KEY=your-supabase-anon-key
+   ```
+
+3. Jalankan server pengembangan:
+
+   ```bash
+   npm run dev
+   ```
+
+4. Buka `http://localhost:3000`.
+
+Alamat Supabase dipakai juga oleh konfigurasi Next.js untuk mengizinkan gambar dari Supabase Storage. Pastikan kedua environment variable tersedia saat server dimulai dan saat build/deployment.
+
+## Data dan konfigurasi Supabase
+
+Website membaca dan menulis tabel berikut. Nama kolom mengikuti query yang digunakan aplikasi saat ini.
+
+| Tabel | Kolom yang digunakan | Keterangan |
+| --- | --- | --- |
+| `projects` | `id`, `Title`, `Description`, `Img`, `TechStack`, `Features`, `Link`, `Github`, `created_at` | Proyek portfolio. `TechStack` dan `Features` disimpan sebagai daftar nilai; `Img` berisi URL publik gambar. |
+| `certificates` | `id`, `Img`, `created_at` | Sertifikat yang ditampilkan pada portfolio. |
+| `portfolio_comments` | `id`, `user_name`, `profile_image`, `content`, `created_at`, `is_pinned` | Komentar pengunjung dan status sematan. |
+| `profiles` | `id`, `role` | `id` harus cocok dengan ID pengguna Supabase Auth; role admin menggunakan nilai `admin`. |
+
+Bucket Supabase Storage yang digunakan:
+
+- `project-images` untuk gambar proyek.
+- `certificate-images` untuk gambar sertifikat.
+- `profile-images` untuk foto profil komentar.
+
+Atur kebijakan RLS sesuai operasi aplikasi: pengunjung perlu membaca data portfolio dan komentar, mengirim komentar, serta mengunggah foto komentar jika fitur tersebut diaktifkan. Operasi pembuatan, perubahan, penghapusan konten, akses dashboard, serta upload proyek dan sertifikat harus dibatasi untuk admin. Atur juga kebijakan Storage yang sesuai dan akses baca publik untuk gambar yang ditampilkan memakai public URL. Aktifkan Supabase Realtime untuk tabel `portfolio_comments` agar komentar baru dapat muncul tanpa memuat ulang halaman.
+
+Tabel `profiles` perlu memiliki baris untuk setiap akun admin yang mengacu ke `auth.users.id`. Sediakan akun admin melalui Supabase Auth dan berikan role admin pada baris profilnya.
+
+## Perintah project
 
 | Perintah | Keterangan |
 | --- | --- |
-| `npm run dev` | Menjalankan aplikasi di mode development |
+| `npm run dev` | Menjalankan server pengembangan |
+| `npm run lint` | Menjalankan ESLint |
+| `npm run typecheck` | Memeriksa tipe TypeScript tanpa membuat output |
 | `npm run build` | Membuat build production |
-| `npm run start` | Menjalankan hasil build production |
-| `npm run lint` | Menjalankan pengecekan ESLint |
-| `npm run typecheck` | Menjalankan pengecekan TypeScript |
+| `npm run start` | Menjalankan build production |
 
-## Konfigurasi Supabase
+## Build dan deployment
 
-Untuk fitur portal admin dan data portfolio berfungsi dengan baik, project Supabase Anda perlu memiliki:
-
-- autentikasi user
-- tabel `profiles` untuk role admin
-- tabel `projects` untuk data proyek
-- tabel `certificates` untuk data sertifikat
-- tabel `comments` untuk komentar pengunjung
-- storage bucket untuk media proyek/sertifikat
-- kebijakan RLS yang sesuai
-
-## Build untuk Production
+Uji build production dengan:
 
 ```bash
 npm run build
-```
-
-Lalu jalankan server produksi dengan:
-
-```bash
 npm run start
 ```
 
-Untuk deployment, Anda bisa menggunakan Vercel atau layanan hosting Node.js lainnya. Pastikan environment variables Supabase sudah diatur di platform hosting.
+Project dapat di-deploy ke Vercel atau platform yang mendukung Next.js. Tambahkan `NEXT_PUBLIC_SUPABASE_URL` dan `NEXT_PUBLIC_SUPABASE_ANON_KEY` pada environment deployment untuk Preview dan Production, lalu lakukan build ulang setelah mengubah nilainya.
 
-## Catatan Keamanan
+Form Contact menggunakan layanan FormSubmit; alamat penerima saat ini ditentukan di `src/app/views/Contact.tsx`. Perbarui konfigurasi di sana bila penerima perlu diganti.
 
-- Gunakan `NEXT_PUBLIC_SUPABASE_ANON_KEY` untuk frontend.
-- Jangan menyimpan `service role` key di frontend.
-- Batasi akses tabel dan storage melalui RLS Supabase.
-- Pastikan login admin hanya diberikan kepada user yang benar-benar berwenang.
+## Catatan keamanan
+
+- `NEXT_PUBLIC_SUPABASE_ANON_KEY` memang digunakan oleh aplikasi browser dan tidak boleh dianggap sebagai secret. Keamanan akses harus ditegakkan dengan RLS dan kebijakan Storage.
+- Jangan pernah menaruh Supabase service-role key di variabel `NEXT_PUBLIC_*` atau bundle browser.
+- Batasi kebijakan perubahan data dan akses admin hanya untuk pengguna yang berwenang.
+- Sitemap dibuat dari tabel `projects` dan diperbarui dengan interval revalidasi satu jam. Akses `/admin` diblokir dari crawling melalui `robots.txt`.
 
 ## Penutup
 
-Proyek ini dirancang sebagai portfolio digital yang mudah dikelola, modern, dan siap dideploy. Dengan kombinasi Next.js, Tailwind, dan Supabase, Anda bisa mengelola konten portfolio tanpa harus mengubah source code satu per satu.
+Website ini menyatukan profil, karya, sertifikat, dan interaksi pengunjung dalam satu portfolio yang responsif. Integrasi Supabase memungkinkan konten proyek dan sertifikat dikelola melalui dashboard admin, sementara kebijakan RLS dan Storage menjaga akses data sesuai peran. Setelah konfigurasi Supabase dan environment variable disiapkan, aplikasi dapat dijalankan secara lokal maupun di-deploy ke layanan yang mendukung Next.js.
