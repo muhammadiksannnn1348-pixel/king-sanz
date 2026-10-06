@@ -7,6 +7,6 @@ export default function robots(): MetadataRoute.Robots {
       allow: '/',
       disallow: ['/admin', '/admin/'],
     },
-    sitemap: 'https://king-sanz.vercel.app/sitemap.xml',
+    sitemap: 'https://www.ryujin-sanz.my.id/sitemap.xml',
   }
 }

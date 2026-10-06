@@ -1,7 +1,7 @@
 import type { MetadataRoute } from 'next'
 import { createClient } from '@supabase/supabase-js'
 
-const siteUrl = 'https://king-sanz.vercel.app'
+const siteUrl = 'https://www.ryujin-sanz.my.id'
 
 type ProjectSitemapRecord = {
   id: string | number
