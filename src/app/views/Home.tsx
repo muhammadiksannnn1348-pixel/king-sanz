@@ -155,13 +155,13 @@ const Home = () => {
   return (
     <>
       <div className="min-h-screen bg-[#030014] overflow-hidden px-[5%] sm:px-[5%] lg:px-[10%]" id="home">
-        <div className={`relative z-10 transition-all duration-600 ${isLoaded ? "opacity-100" : "opacity-0"}`}>
+        <div className={`relative z-10 transition-all duration-100 ${isLoaded ? "opacity-100" : "opacity-0"}`}>
           <div className="container mx-auto min-h-screen">
             <div className="flex flex-col lg:flex-row items-center justify-center h-screen md:justify-between gap-0 sm:gap-12 lg:gap-20">
               {/* Left Column */}
               <div className="w-full lg:w-1/2 space-y-6 sm:space-y-8 text-left lg:text-left order-1 lg:order-1 lg:mt-0"
                 data-aos="fade-right"
-                data-aos-delay="200">
+                data-aos-delay="100">
                 <div className="space-y-4 sm:space-y-6">
                   <StatusBadge />
                   <MainTitle />
@@ -219,7 +219,7 @@ const Home = () => {
                     isHovering ? "scale-105" : "scale-100"
                   }`}>
                     <Image
-                      src="/Animation1.gif"
+                      src="/Animation1.webp"
                       alt="Animated illustration of a developer working on a laptop"
                       width={800}
                       height={600}

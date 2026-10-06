@@ -323,20 +323,8 @@ const WelcomeScreen = ({ onLoadingComplete }: WelcomeScreenProps) => {
           animate="animate"
           exit="exit"
         >
-          {/* Layer 1: Starry background */}
-          <StarryBackground />
-
           {/* Layer 2: Glow overlay */}
           <div className="absolute inset-0 bg-gradient-to-br from-indigo-900/20 via-transparent to-purple-900/20 z-[2] pointer-events-none" />
-
-          {/* Layer 3: Vignette */}
-          <div
-            className="absolute inset-0 z-[3] pointer-events-none"
-            style={{
-              background:
-                "radial-gradient(circle at center, transparent 30%, rgba(3,0,20,0.6) 100%)",
-            }}
-          />
 
           {/* Layer 4: Content */}
           <div className="relative z-10 min-h-screen flex items-center justify-center px-4">
@@ -417,9 +405,7 @@ const WelcomeScreen = ({ onLoadingComplete }: WelcomeScreenProps) => {
                 transition={{ delay: 1.6, duration: 0.9, ease: easeOutQuart }}
               >
                 <a
-                  href="https://king-sanz.vercel.app/"
-                  target="_blank"
-                  rel="noopener noreferrer"
+                  href="https://www.ryujin-sanz.my.id/"
                   className="inline-flex items-center gap-2 px-4 py-2 sm:px-6 sm:py-3 rounded-full relative group hover:scale-105 transition-transform duration-500"
                 >
                   <div className="absolute inset-0 bg-gradient-to-r from-indigo-600/20 to-purple-600/20 rounded-full blur-md group-hover:blur-lg transition-all duration-500" />
@@ -427,9 +413,9 @@ const WelcomeScreen = ({ onLoadingComplete }: WelcomeScreenProps) => {
                     <Globe className="w-4 h-4 sm:w-5 sm:h-5 text-indigo-400" />
                     <span className="bg-gradient-to-r from-indigo-400 to-purple-400 bg-clip-text text-transparent">
                       <TypewriterEffect
-                        text="king-sanz.vercel.app"
-                        speed={85}
-                        startDelay={2000}
+                        text="ryujin-sanz.my.id"
+                        speed={80}
+                        startDelay={1000}
                         onComplete={() => setTypingDone(true)}
                       />
                     </span>

@@ -14,7 +14,7 @@ const poppins = Poppins({
 
 export const metadata: Metadata = {
   title: {
-    default: 'Sanz | Full-Stack Web Developer',
+    default: 'Ryujin Sanz | Full-Stack Web Developer',
     template: '%s | Sanz',
   },
 
@@ -25,10 +25,14 @@ export const metadata: Metadata = {
     'M.IKSANUDDIN',
     'Sanz',
     'Full-Stack Web Developer',
-    'king-sanz',
+    'Ryujin-sanz',
     'Portofolio Iksan',
     'xy.sanz.kce',
     'ikhsanuddin',
+    'web udin',
+    'iksan',
+    'Ryujin portofolio',
+    'Ryujin web',
   ],
 
   authors: [
@@ -37,7 +41,7 @@ export const metadata: Metadata = {
     },
   ],
 
-  metadataBase: new URL('https://king-sanz.vercel.app'),
+  metadataBase: new URL('https://www.ryujin-sanz.my.id/'),
 
   alternates: {
     canonical: '/',
@@ -49,10 +53,10 @@ export const metadata: Metadata = {
 
   openGraph: {
     type: 'website',
-    url: 'https://king-sanz.vercel.app/',
+    url: 'https://www.ryujin-sanz.my.id/',
     title: 'Sanz | Full-Stack Web Developer',
     description:
-      'Website resmi dan portofolio M.IKSANUDDIN, Full-Stack Web Developer.',
+      'Portofolio website ',
   },
 }
 
