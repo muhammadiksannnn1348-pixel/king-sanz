@@ -13,6 +13,8 @@ const poppins = Poppins({
 })
 
 export const metadata: Metadata = {
+  metadataBase: new URL('https://www.ryujin-sanz.my.id'),
+
   title: {
     default: 'Ryujin Sanz | Full-Stack Web Developer',
     template: '%s | Sanz',
@@ -35,13 +37,7 @@ export const metadata: Metadata = {
     'Ryujin web',
   ],
 
-  authors: [
-    {
-      name: 'M.IKSANUDDIN',
-    },
-  ],
-
-  metadataBase: new URL('https://www.ryujin-sanz.my.id/'),
+  authors: [{ name: 'M.IKSANUDDIN' }],
 
   alternates: {
     canonical: '/',
@@ -52,11 +48,13 @@ export const metadata: Metadata = {
   },
 
   openGraph: {
-    type: 'website',
+    title: 'Ryujin Sanz | Full-Stack Web Developer',
+    description:
+      'Portofolio M. Iksanuddin, Full-Stack Web Developer yang berfokus pada produk digital modern dengan performa tinggi dan desain yang intuitif.',
+    url: '/',
     siteName: 'Ryujin Sanz',
+    type: 'website',
     locale: 'id_ID',
-    title: 'Sanz | Full-Stack Web Developer',
-    description: 'Portofolio website M. Iksanuddin, Full-Stack Web Developer.',
     images: [
       {
         url: '/opengraph-image',
@@ -66,10 +64,12 @@ export const metadata: Metadata = {
       },
     ],
   },
+
   twitter: {
     card: 'summary_large_image',
-    title: 'Sanz | Full-Stack Web Developer',
-    description: 'Portofolio website M. Iksanuddin, Full-Stack Web Developer.',
+    title: 'Ryujin Sanz | Full-Stack Web Developer',
+    description:
+      'Portofolio M. Iksanuddin, Full-Stack Web Developer yang berfokus pada produk digital modern dengan performa tinggi dan desain yang intuitif.',
     images: ['/opengraph-image'],
   },
 }
@@ -83,17 +83,8 @@ export default function RootLayout({
     <html lang="id" data-scroll-behavior="smooth">
       <head>
         <meta name="theme-color" content="#030014" />
-
-        <meta
-          name="mobile-web-app-capable"
-          content="yes"
-        />
-
-        <meta
-          name="apple-mobile-web-app-capable"
-          content="yes"
-        />
-
+        <meta name="mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta
           name="apple-mobile-web-app-status-bar-style"
           content="black-translucent"
