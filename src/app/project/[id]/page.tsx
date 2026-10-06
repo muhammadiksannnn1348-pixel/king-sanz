@@ -3,6 +3,7 @@ import { notFound } from 'next/navigation'
 import { createClient } from '@supabase/supabase-js'
 import ProjectDetail, { type ProjectDetailData } from '../../../components/ProjectDetail'
 import Footer from '../../../components/Footer'
+import { projectSlug } from '../../../lib/projectSlug'
 
 type ProjectRecord = {
   id: string | number
@@ -15,20 +16,28 @@ type ProjectRecord = {
   Img: string | null
 }
 
-async function getProjectById(id: string): Promise<ProjectRecord | null> {
+async function getProjectByIdentifier(identifier: string): Promise<ProjectRecord | null> {
   const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
   const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
   if (!supabaseUrl || !supabaseKey) return null
 
   const supabase = createClient(supabaseUrl, supabaseKey)
-  const { data, error } = await supabase
+  const { data: projectById, error: idError } = await supabase
     .from('projects')
     .select('id, Title, Description, Features, TechStack, Github, Link, Img')
-    .eq('id', id)
+    .eq('id', identifier)
     .maybeSingle()
 
-  if (error || !data) return null
-  return data as ProjectRecord
+  if (!idError && projectById) return projectById as ProjectRecord
+
+  const { data: projects, error } = await supabase
+    .from('projects')
+    .select('id, Title, Description, Features, TechStack, Github, Link, Img')
+
+  if (error || !projects) return null
+  return ((projects as ProjectRecord[]).find(
+    (project) => projectSlug(project.Title, project.id) === identifier,
+  ) ?? null)
 }
 
 function toProjectDetailData(project: ProjectRecord): ProjectDetailData {
@@ -50,11 +59,12 @@ export async function generateMetadata({
   params: Promise<{ id: string }>
 }): Promise<Metadata> {
   const { id } = await params
-  const project = await getProjectById(id)
+  const project = await getProjectByIdentifier(id)
   if (!project) return {}
 
   const description = project.Description || `Detail proyek ${project.Title} oleh Sanz.`
-  const url = `/project/${project.id}`
+  const url = `/project/${projectSlug(project.Title, project.id)}`
+  const image = project.Img ? [{ url: project.Img, alt: `${project.Title} project preview` }] : undefined
 
   return {
     title: project.Title,
@@ -65,6 +75,13 @@ export async function generateMetadata({
       url,
       title: `${project.Title} | Sanz`,
       description,
+      images: image,
+    },
+    twitter: {
+      card: image ? 'summary_large_image' : 'summary',
+      title: `${project.Title} | Sanz`,
+      description,
+      images: image,
     },
   }
 }
@@ -75,7 +92,7 @@ export default async function ProjectPage({
   params: Promise<{ id: string }>
 }) {
   const { id } = await params
-  const project = await getProjectById(id)
+  const project = await getProjectByIdentifier(id)
   if (!project) notFound()
 
   return (

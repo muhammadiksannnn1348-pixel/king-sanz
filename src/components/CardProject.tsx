@@ -4,6 +4,7 @@ import React from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { ExternalLink, ArrowRight } from "lucide-react";
+import { projectSlug } from "../lib/projectSlug";
 
 const CardProject = ({
   Img,
@@ -81,7 +82,7 @@ const CardProject = ({
 
               {id ? (
                 <Link
-                  href={`/project/${id}`}
+                  href={`/project/${projectSlug(Title, id)}`}
                   onClick={(event) => {
                     handleDetails(event)
                     if (id) {

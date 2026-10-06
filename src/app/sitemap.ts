@@ -1,5 +1,6 @@
 import type { MetadataRoute } from 'next'
 import { createClient } from '@supabase/supabase-js'
+import { projectSlug } from '../lib/projectSlug'
 
 const siteUrl = 'https://www.ryujin-sanz.my.id'
 
@@ -22,13 +23,13 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
   if (error || !data) return entries
 
-  const seenIds = new Set<string>()
+  const seenSlugs = new Set<string>()
   const projectEntries = (data as ProjectSitemapRecord[]).flatMap(({ id, Title }) => {
-    const entryId = String(id)
-    if (!entryId || seenIds.has(entryId)) return []
+    const slug = projectSlug(Title, id)
+    if (seenSlugs.has(slug)) return []
 
-    seenIds.add(entryId)
-    return [{ url: `${siteUrl}/project/${entryId}` }]
+    seenSlugs.add(slug)
+    return [{ url: `${siteUrl}/project/${slug}` }]
   })
 
   return [...entries, ...projectEntries]
