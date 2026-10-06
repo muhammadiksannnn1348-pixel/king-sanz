@@ -31,10 +31,8 @@ export const metadata: Metadata = {
     'Portofolio Iksan',
     'xy.sanz.kce',
     'ikhsanuddin',
-    'web udin',
     'iksan',
     'Ryujin portofolio',
-    'Ryujin web',
     'Ryujin Sanz'
   ],
 
@@ -45,13 +43,13 @@ export const metadata: Metadata = {
   },
 
   icons: {
-    icon: '/logo%20SZ.jpg',
+    icon: '/icon.webp',
   },
 
   openGraph: {
     title: 'Ryujin Sanz | Full-Stack Web Developer',
     description:
-      'Portofolio M. Iksanuddin, Full-Stack Web Developer yang membangun aplikasi web modern dengan performa cepat, desain intuitif, dan pengalaman pengguna yang nyaman. Lihat proyek-proyek terbaik saya dan mari berkolaborasi.',
+      'Website resmi M. IKSANUDDIN, Full-Stack Web Developer yang berfokus pada pembangunan produk digital modern dengan performa tinggi, desain yang intuitif, dan pengalaman pengguna yang optimal. Mengubah ide menjadi solusi web yang inovatif, fungsional, dan berdampak.',
     url: '/',
     siteName: 'Ryujin Sanz',
     type: 'website',
