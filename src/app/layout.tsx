@@ -52,16 +52,25 @@ export const metadata: Metadata = {
   },
 
   openGraph: {
-  type: 'website',
-  siteName: 'Ryujin Sanz',
-  locale: 'id_ID',
-  title: 'Sanz | Full-Stack Web Developer',
-  description: 'Portofolio website M. Iksanuddin, Full-Stack Web Developer.',
-},
+    type: 'website',
+    siteName: 'Ryujin Sanz',
+    locale: 'id_ID',
+    title: 'Sanz | Full-Stack Web Developer',
+    description: 'Portofolio website M. Iksanuddin, Full-Stack Web Developer.',
+    images: [
+      {
+        url: '/opengraph-image',
+        width: 1200,
+        height: 630,
+        alt: 'M. Iksanuddin - Full-Stack Web Developer',
+      },
+    ],
+  },
   twitter: {
     card: 'summary_large_image',
     title: 'Sanz | Full-Stack Web Developer',
     description: 'Portofolio website M. Iksanuddin, Full-Stack Web Developer.',
+    images: ['/opengraph-image'],
   },
 }
 
