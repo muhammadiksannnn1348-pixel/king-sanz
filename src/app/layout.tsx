@@ -43,7 +43,7 @@ export const metadata: Metadata = {
   },
 
   icons: {
-    icon: '/icon.webp',
+    icon: '/Icon.webp',
   },
 
   openGraph: {
