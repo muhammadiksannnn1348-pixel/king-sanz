@@ -54,7 +54,6 @@ export default async function Image() {
     />
   );
 
-  // Cincin orbit: garis solid tipis (murah untuk kompresi PNG)
   const ring = (d: number, color: string) => (
     <div
       style={{
