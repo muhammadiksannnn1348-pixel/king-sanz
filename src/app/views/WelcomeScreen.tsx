@@ -415,7 +415,7 @@ const WelcomeScreen = ({ onLoadingComplete }: WelcomeScreenProps) => {
                       <TypewriterEffect
                         text="ryujin-sanz.my.id"
                         speed={80}
-                        startDelay={1300}
+                        startDelay={2000}
                         onComplete={() => setTypingDone(true)}
                       />
                     </span>
