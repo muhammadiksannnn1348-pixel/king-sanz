@@ -34,3 +34,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
   return [...entries, ...projectEntries]
 }
+
+// fungsi ini menghasilkan sitemap.xml untuk situs web,
+// termasuk halaman utama dan halaman proyek yang diambil dari database Supabase.
+// Sitemap ini membantu mesin pencari mengindeks halaman-halaman situs web dengan lebih efisien.

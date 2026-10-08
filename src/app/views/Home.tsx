@@ -39,14 +39,14 @@ const MainTitle = memo(() => (
       <span className="relative inline-block">
         <span className="absolute -inset-2 bg-gradient-to-r from-[#6366f1] to-[#a855f7] blur-xl opacity-10"></span>
         <span className="relative bg-gradient-to-r from-white via-blue-100 to-purple-200 bg-clip-text text-transparent">
-          Full-Stack
+          Frontend
         </span>
       </span>
       <br />
       <span className="relative inline-block mt-2">
         <span className="absolute -inset-2 bg-gradient-to-r from-[#6366f1] to-[#a855f7] blur-xl opacity-10"></span>
         <span className="relative bg-gradient-to-r from-[#6366f1] via-[#a855f7] to-[#6366f1] bg-clip-text text-transparent drop-shadow-[0_5px_15px_rgba(99,102,241,0.2)]">
-          Web Developer
+          Developer
         </span>
       </span>
     </h1>
@@ -93,7 +93,7 @@ const SocialLink = memo(({ icon: Icon, link, label }: { icon: ComponentType<{ cl
 const TYPING_SPEED = 100; // ms per karakter saat mengetik
 const ERASING_SPEED = 50; // ms per karakter saat menghapus
 const PAUSE_DURATION = 2000; // jeda setelah kata selesai diketik
-const WORDS = ["I am a student", "Tech Enthusiast", "Software Engineer", "Web Developer", "UI/UX Designer", "Graphic Designer", ""]; // kata-kata yang berganti-ganti
+const WORDS = ["I am a student", "Tech Enthusiast", "Software Engineer", "Web Developer", "UI/UX Designer", "Graphic Designer"]; // kata-kata yang berganti-ganti
 const TECH_STACK = ["React", "Javascript", "Node.js", "Tailwind"]; // daftar teknologi yang ditampilkan
 // Daftar social link yang digunakan di bagian kiri
 const SOCIAL_LINKS = [
